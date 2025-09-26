@@ -60,7 +60,7 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
-            <a href="#home" className="text-cta text-cml-black hover:text-cml-orange transition-colors">
+            <a href="/" className="text-cta text-cml-black hover:text-cml-orange transition-colors">
               HOME
             </a>
             <div className="relative">

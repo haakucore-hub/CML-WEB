@@ -13,6 +13,7 @@ import TermsAndConditions from "./pages/terms&condition";
 import MediaCoverage from "./pages/mediaCoverage";
 import Career from "./pages/careers";
 import Tenders from "./pages/Tenders";
+import AnnualReportsPage from "./pages/AnnualReports";
 import NewsArticle from "./pages/NewsArticle";
 import NotFound from "./pages/NotFound";
 
@@ -36,6 +37,7 @@ const App = () => (
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/Tenders" element={<Tenders />} />
            <Route path="/refund" element={<RefundPolicy />} />
+          <Route path="/AnnualReports" element={<AnnualReportsPage />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
 
