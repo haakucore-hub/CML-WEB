@@ -1,5 +1,6 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
+import { Link } from "react-router-dom";
 import useReportStore from '@/store/useReportStore';
 // Import styles
 import 'swiper/css';
@@ -126,6 +127,16 @@ const AnnualReportSection = () => {
             ))}
           </Swiper>
 
+        </div>
+
+        <div className="flex justify-center mt-8">
+          <Link
+            to="/AnnualReports"
+            className="inline-block bg-cml-green text-white text-cta font-semibold px-8 py-3 rounded-full shadow hover:bg-cml-green/90 transition-colors"
+            style={{ minWidth: 180, textAlign: 'center' }}
+          >
+            VIEW MORE
+          </Link>
         </div>
       </div>
     </section>

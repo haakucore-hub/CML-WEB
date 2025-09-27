@@ -1,191 +1,25 @@
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-import { Button } from "@/components/ui/button";
+import useBoardMemberStore from "@/store/ourMembersStore";
 import { Mail, Phone } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const AboutUs = () => {
-  const boardMembers = [
-    {
-      name: "Mr. Ranjit Barthakur",
-      role: "Chairman",
-      image: "ashis.png",
-      isChairman: true,
-      bio: "Ranjit Barthakur is a social entrepreneur, committed to pursuing social change through innovative cutting edge concepts, ecological neutrality and impactful action. He has pioneered the concepts of Naturenomics™ and Rural Futures, with a view to inspiring community-based conservation and livelihoods in the Eastern Himalayas.",
-      email: "ranjit.barthakur@cml.com",
-      phone: "+91 9999001810",
-      experience: [
-        "Ex-Chairman Amalgamated Plantations",
-        "Chairman Multiport Pvt Ltd",
-        "Chairman Globally Managed Services",
-        "Chairman Balipara Foundation",
-      ],
-    },
-    {
-      name: "Mr. Ashish Deshpande",
-      role: "Member",
-      image: "ashis.png",
-      bio: "Ashish Deshpande brings extensive experience in corporate governance and strategic planning. His leadership has been instrumental in driving sustainable development initiatives across various sectors.",
-      email: "ashish.deshpande@cml.com",
-      phone: "+91 9999001811",
-      experience: [
-        "Senior Executive at Leading Corporation",
-        "Board Member Multiple Organizations",
-        "Strategic Planning Expert",
-        "Sustainability Advocate",
-      ],
-    },
-    {
-      name: "Mr. Dharani Ratno",
-      role: "Member",
-      image: "ashis.png",
-      bio: "Dharani Ratno has dedicated his career to rural development and community empowerment. His deep understanding of grassroots challenges makes him invaluable to our mission.",
-      email: "dharani.ratno@cml.com",
-      phone: "+91 9999001812",
-      experience: [
-        "Rural Development Specialist",
-        "Community Empowerment Leader",
-        "Microfinance Expert",
-        "Policy Advocate",
-      ],
-    },
-    {
-      name: "Prof. Jahar Saha",
-      role: "Member",
-      image: "ashis.png",
-      bio: "Prof. Jahar Saha brings academic excellence and research expertise to our board. His scholarly approach helps us develop evidence-based solutions for complex development challenges.",
-      email: "jahar.saha@cml.com",
-      phone: "+91 9999001813",
-      experience: [
-        "Distinguished Professor",
-        "Research Excellence Award Winner",
-        "Published Author",
-        "Academic Administrator",
-      ],
-    },
-    {
-      name: "Ms Amrita Patwardhan",
-      role: "Member",
-      image: "ashis.png",
-      bio: "Amrita Patwardhan specializes in women's empowerment and gender equality initiatives. Her work has transformed lives and created sustainable opportunities for marginalized communities.",
-      email: "amrita.patwardhan@cml.com",
-      phone: "+91 9999001814",
-      experience: [
-        "Women's Empowerment Leader",
-        "Gender Equality Advocate",
-        "Social Impact Specialist",
-        "Community Organizer",
-      ],
-    },
-    {
-      name: "Mr S C Das",
-      role: "Member",
-      image: "ashis.png",
-      bio: "S C Das has extensive experience in financial management and organizational development. His expertise ensures our programs are financially sustainable and well-managed.",
-      email: "sc.das@cml.com",
-      phone: "+91 9999001815",
-      experience: [
-        "Financial Management Expert",
-        "Organizational Development Specialist",
-        "Strategic Planning Professional",
-        "Risk Management Advisor",
-      ],
-    },
-    {
-      name: "Ms Monalisa Goswami",
-      role: "Member",
-      image: "ashis.png",
-      bio: "Monalisa Goswami focuses on capacity building and training programs. Her innovative approaches to skill development have enhanced the capabilities of countless individuals.",
-      email: "monalisa.goswami@cml.com",
-      phone: "+91 9999001816",
-      experience: [
-        "Capacity Building Expert",
-        "Training Program Designer",
-        "Skill Development Specialist",
-        "Educational Innovator",
-      ],
-    },
-    {
-      name: "Mr. Divyang Waghela",
-      role: "Member",
-      image: "ashis.png",
-      bio: "Divyang Waghela brings technology and innovation expertise to our board. His vision for digital transformation helps us leverage technology for greater social impact.",
-      email: "divyang.waghela@cml.com",
-      phone: "+91 9999001817",
-      experience: [
-        "Technology Innovation Leader",
-        "Digital Transformation Expert",
-        "Startup Mentor",
-        "Tech for Good Advocate",
-      ],
-    },
-  ];
+  const { boardMembers, members, fetchBoardMembers, fetchMembers, loading, error } = useBoardMemberStore();
 
-  const [selectedMember, setSelectedMember] = useState(boardMembers[0]);
+  useEffect(() => {
+    fetchMembers();
+    fetchBoardMembers();
+  }, [fetchMembers, fetchBoardMembers]);
 
-  const teamMembers = [
-    {
-      name: "ANJALI SAIKIA",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "green",
-    },
-    {
-      name: "MANISHA BANERJEE",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "orange",
-    },
-    {
-      name: "RAKTIM DAS",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "green",
-    },
-    {
-      name: "BARUN CHETIA",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "orange",
-    },
-    {
-      name: "RAKTIM DAS",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "green",
-    },
-    {
-      name: "BARUN CHETIA",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "orange",
-    },
-    {
-      name: "ANJALI SAIKIA",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "green",
-    },
-    {
-      name: "MANISHA BANERJEE",
-      role: "Volunteer Coordinator",
-      experience: "Experience: 10+ Years",
-      image: "ashis.png",
-      border: "orange",
-    },
-  ];
+  // Defensive: fallback to first member if available
+  const [selectedMember, setSelectedMember] = useState(null);
+  useEffect(() => {
+    if (boardMembers && boardMembers.length > 0) {
+      setSelectedMember(boardMembers[0]);
+    }
+  }, [boardMembers]);
 
   return (
     <div className="min-h-screen">
-
-
       {/* Hero Section */}
       <section
         className="relative h-64 bg-cover bg-center flex items-center justify-center"
@@ -260,18 +94,16 @@ const AboutUs = () => {
 
           {/* Board Members Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
-            {boardMembers.map((member, index) => (
+            {boardMembers && boardMembers.map((member, index) => (
               <div
                 key={index}
                 className={`flex items-center cursor-pointer group w-full max-w-xs mx-auto px-3 py-2 sm:px-4 sm:py-3
-        ${
-          selectedMember.name === member.name
+        ${selectedMember && selectedMember.name === member.name
             ? "bg-cml-green text-white rounded-full shadow-lg"
             : "border-cml-green border-2 rounded-full hover:shadow-lg hover:bg-cml-green/10 transition-all duration-300"
         }`}
                 onClick={() => setSelectedMember(member)}
               >
-                {/* Profile Image */}
                 <div className="relative flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 mr-3 sm:mr-4 rounded-full overflow-hidden bg-green-500">
                   <img
                     src={member.image}
@@ -279,20 +111,17 @@ const AboutUs = () => {
                     className="w-full h-full object-cover"
                   />
                 </div>
-
-                {/* Member Info */}
                 <div
-                  className={`text-start ${
-                    selectedMember.name === member.name
+                  className={`text-start ${selectedMember && selectedMember.name === member.name
                       ? "text-white"
                       : "text-gray-900"
-                  }`}
+                    }`}
                 >
                   <h3 className="text-xs sm:text-sm md:text-base font-semibold transition-colors">
                     {member.name}
                   </h3>
                   <p className="text-[10px] sm:text-xs md:text-sm">
-                    {member.role}
+                    {member.designation || member.role}
                   </p>
                 </div>
               </div>
@@ -300,75 +129,71 @@ const AboutUs = () => {
           </div>
 
           {/* Chairman Spotlight */}
-          <div className="bg-white rounded-lg shadow-lg p-4 border-4 border-cml-green">
-            <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-              {/* Selected Member Image */}
-              <div className="flex justify-center lg:justify-start">
-                <div
-                  className="w-[
-366px] h-[
-366px] rounded-lg overflow-hidden"
-                >
-                  <img
-                    src={selectedMember.image}
-                    alt={selectedMember.name}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              </div>
 
-              {/* Selected Member Info */}
-              <div className="">
-                <div className="mb-6">
-                  <h3 className="text-3xl font-bold text-gray-900 mb-2">
-                    {selectedMember.name.toUpperCase()}{" "}
-                    <span className="text-cml-orange text-xl">
-                      {selectedMember.role.toUpperCase()}
-                    </span>
-                  </h3>
-                  <p className="text-gray-700 leading-relaxed">
-                    {selectedMember.bio}
-                  </p>
+          {selectedMember && (
+            <div className="bg-white rounded-lg shadow-lg p-4 border-4 border-cml-green">
+              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div className="flex justify-center lg:justify-start">
+                  <div className="w-[366px] h-[366px] rounded-lg overflow-hidden">
+                    <img
+                      src={selectedMember.image}
+                      alt={selectedMember.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
                 </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                  <div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <span className="text-sm text-gray-600">
-                        📧 Independent
+                <div className="">
+                  <div className="mb-6">
+                    <h3 className="text-3xl font-bold text-gray-900 mb-2">
+                      {selectedMember.name?.toUpperCase()} {" "}
+                      <span className="text-cml-orange text-xl">
+                        {(selectedMember.designation || selectedMember.role)?.toUpperCase()}
                       </span>
-                    </div>
-                    <div className="flex items-center gap-2 mb-2">
-                      <Mail className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm text-gray-600">
-                        {selectedMember.email}
-                      </span>
-                    </div>
-                    <div className="flex items-center gap-2">
-                      <Phone className="w-4 h-4 text-gray-600" />
-                      <span className="text-sm text-gray-600">
-                        {selectedMember.phone}
-                      </span>
+                    </h3>
+                    <p className="text-gray-700 leading-relaxed">
+                      {selectedMember.desc || selectedMember.bio}
+                    </p>
+                  </div>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="text-sm text-gray-600">
+                          📧 Independent
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2 mb-2">
+                        <Mail className="w-4 h-4 text-gray-600" />
+                        <span className="text-sm text-gray-600">
+                          {selectedMember.email}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <Phone className="w-4 h-4 text-gray-600" />
+                        <span className="text-sm text-gray-600">
+                          {selectedMember.phone}
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-              <div>
-                <h4 className="font-semibold text-cml-green mb-3">
-                  EXPERIENCE
-                </h4>
-                <div className="space-y-2 text-sm text-gray-600">
-                  {selectedMember.experience.map((exp, index) => (
-                    <div key={index} className="flex items-center gap-2">
-                      <span className="w-2 h-2 bg-cml-orange rounded-full"></span>
-                      <span>{exp}</span>
-                    </div>
-                  ))}
+                <div>
+                  <h4 className="font-semibold text-cml-green mb-3">
+                    EXPERIENCE
+                  </h4>
+                  <div className="space-y-2 text-sm text-gray-600">
+                    {(selectedMember.experience || []).map((exp, index) => (
+                      <div key={index} className="flex items-center gap-2">
+                        <span className="w-2 h-2 bg-cml-orange rounded-full"></span>
+                        <span>
+                          {typeof exp === 'string' ? exp : `${exp.role}${exp.workplace ? `, ${exp.workplace}` : ''}`}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </div>
       </section>
 
@@ -380,22 +205,17 @@ const AboutUs = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {teamMembers.map((member, index) => (
+            {members && members.map((member, index) => (
               <div key={index} className="group">
                 <div
-                  className={`${
-                    member.border === "orange"
-                      ? "border-t-4 border-r-4 border-cml-orange "
-                      : "border-t-4 border-r-4 border-cml-green"
-                  } overflow-hidden rounded-lg `}
+                  className={`border-t-4 border-r-4 ${index % 2 === 0 ? 'border-cml-green' : 'border-cml-orange'} overflow-hidden rounded-lg`}
                 >
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-80 object-cover transition-transform duration-300"
                   />
-
-                  <div className=" bottom-4 p-4 left-4 right-4 text-black">
+                  <div className="bottom-4 p-4 left-4 right-4 text-black">
                     <h3 className="text-lg font-bold mb-1">{member.name}</h3>
                     <p className="text-sm opacity-90 text-cml-green">
                       {member.role}
@@ -408,8 +228,6 @@ const AboutUs = () => {
           </div>
         </div>
       </section>
-
-
     </div>
   );
 };

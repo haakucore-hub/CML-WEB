@@ -22,7 +22,7 @@ const useBoardMemberStore = create<BoardMemberStore>((set) => ({
     try {
       const docRef = doc(db, "board_members", "board_members");
       const docSnap = await getDoc(docRef);
-       console.log("doc:", docSnap.exists());
+     
       if (docSnap.exists()) {
         const data = docSnap.data();
         console.log("Fetched board members data:", data);
