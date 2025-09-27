@@ -36,7 +36,7 @@ const App = () => (
           <Route path="/MediaCoverage" element={<MediaCoverage/>} />
           <Route path="/Career" element={<Career/>} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/NewsArticle" element={<NewsArticle />} />
+          <Route path="/NewsArticle/:id" element={<NewsArticle />} />
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/Tenders" element={<Tenders />} />
            <Route path="/refund" element={<RefundPolicy />} />

@@ -1,7 +1,9 @@
 
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Mail, Phone } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import  {useNewsStore } from '@/store/useNewsStore';
+import { useNavigate } from "react-router-dom";
 
 interface NewsEvent {
   id: number;
@@ -15,53 +17,13 @@ interface NewsEvent {
 
 const MediaCoverage = () => {
 
-  const newsEvents: NewsEvent[] = [
-    {
-      id: 1,
-      date: "4/8/2024",
-      time: "12:35 PM",
-      title: "First field visit after joining as a State Head for Assam; Pradipta Mandal shares his experience",
-      description: "Comprehensive overview of the field visit and insights shared by the new State Head",
-      image: "813da84aae9a5bd0670eea142fba75c5f6656133.png",
-      readMoreUrl: "#"
-    },
-    {
-      id: 2,
-      date: "4/8/2024",
-      time: "12:35 PM",
-      title: "Meghalaya Baby League concludes in high spirits",
-      description: "Annual sports event brings together young athletes from across the region",
-      image: "813da84aae9a5bd0670eea142fba75c5f6656133.png",
-      readMoreUrl: "#"
-    },
-    {
-      id: 3,
-      date: "4/8/2024",
-      time: "12:35 PM",
-      title: "Water filters were distributed to curb the water borne diseases in Ujjan Maidan village in Tulashikhar block of Tripura",
-      description: "Community health initiative providing clean water access to rural households",
-      image: "813da84aae9a5bd0670eea142fba75c5f6656133.png",
-      readMoreUrl: "#"
-    },
-    {
-      id: 4,
-      date: "4/8/2024",
-      time: "12:35 PM",
-      title: "Agricultural training workshop held in remote villages of Manipur",
-      description: "Farmers learn sustainable farming techniques and modern agricultural practices",
-      image: "813da84aae9a5bd0670eea142fba75c5f6656133.png",
-      readMoreUrl: "#"
-    },
-    {
-      id: 5,
-      date: "3/8/2024",
-      time: "10:20 AM",
-      title: "Women's self-help group meeting creates new opportunities for rural entrepreneurs",
-      description: "Empowering women through microfinance and skill development programs",
-      image: "813da84aae9a5bd0670eea142fba75c5f6656133.png",
-      readMoreUrl: "#"
-    }
-  ];
+     const navigate = useNavigate();
+     const { news, fetchNews, loading, error } = useNewsStore();
+  
+    useEffect(() => {
+      fetchNews();
+    }, [fetchNews]);
+
 
 
 
@@ -94,16 +56,16 @@ const MediaCoverage = () => {
             <span className="text-cml-orange">LATEST</span> NEWS
           </h2>
           <div className="text-sm  mb-2 font-semibold text-cml-black">
-            {newsEvents[1].date} | {newsEvents[1].time}
+               {new Date(news[0]?.date).toLocaleDateString("en-GB")}
           </div>
           <h3 className="font-semibold text-cml-green mb-2 leading-tight group-hover:text-cml-green transition-colors">
-            {newsEvents[1].title}
+            {news[0]?.title}
           </h3>
           <p className="text-gray-600 text-lg leading-relaxed mb-8  md:block">
-            {newsEvents[1].description}
+            {news[0]?.description}
 
           </p>
-          <button className="text-cml-orange hover:text-orange-600 font-semibold underline transition-colors  md:block">
+          <button className="text-cml-orange hover:text-orange-600 font-semibold underline transition-colors  md:block" onClick={() => navigate(`/NewsArticle/${news[0].id}`)}>
             Read more
           </button>
         </div>
@@ -114,23 +76,23 @@ const MediaCoverage = () => {
         {/* News Container */}
 
 
-        {newsEvents.map((item) => (
+        {news.map((item) => (
 
           <div className="flex items-start gap-2 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group">
             <div className="flex-1">
               <div className="text-sm  mb-2 font-semibold text-cml-black">
-                {item.date} | {item.time}
+                  {new Date(item.date).toLocaleDateString("en-GB")}
               </div>
               <h3 className="font-semibold text-cml-green mb-2 leading-tight group-hover:text-cml-green transition-colors">
                 {item.title}
               </h3>
-              <button className="text-cml-green hover:text-green-700 text-sm font-medium transition-colors">
+              <button onClick={() => navigate(`/NewsArticle/${item.id}`)} className="text-cml-green hover:text-green-700 text-sm font-medium transition-colors">
                 Read more
               </button>
             </div>
             <div className="flex-shrink-0">
               <img
-                src={item.image}
+                src={item.images[0]}
                 alt={item.title}
                 className="w-20 h-16 object-cover rounded"
               />

@@ -1,11 +1,12 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { ChevronUp, ChevronDown } from 'lucide-react';
-
-// Import styles
+import  {useNewsStore } from '@/store/useNewsStore';
+import { useNavigate } from "react-router-dom";
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
+import { useEffect } from 'react';
 
 interface NewsEvent {
   id: number;
@@ -66,6 +67,14 @@ const newsEvents: NewsEvent[] = [
 ];
 
 const NewsEventsSection = () => {
+   const navigate = useNavigate();
+   const { news, fetchNews, loading, error } = useNewsStore();
+
+  useEffect(() => {
+    fetchNews();
+  }, [fetchNews]);
+
+  console.log("News from store:", news);
   return (
     <section className="py-6 ">
       <div className="container mx-auto px-4">
@@ -114,23 +123,27 @@ const NewsEventsSection = () => {
                 }}
                 className="news-swiper h-full"
               >
-                {newsEvents.map((item) => (
+                {news.map((item) => (
                   <SwiperSlide key={item.id}>
                     <div className="flex items-start gap-4 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group">
                       <div className="flex-1">
-                        <div className="text-sm  mb-2 font-semibold text-cml-black">
-                          {item.date} | {item.time}
-                        </div>
+                      <div className="text-sm mb-2 font-semibold text-cml-black">
+  {new Date(item.date).toLocaleDateString("en-GB")}
+</div>
+
                         <h3 className="font-semibold text-cml-green mb-2 leading-tight group-hover:text-cml-green transition-colors">
                           {item.title}
                         </h3>
-                        <button className="text-cml-green hover:text-green-700 text-sm font-medium transition-colors">
-                          Read more
-                        </button>
+                           <button
+            onClick={() => navigate(`/NewsArticle/${item.id}`)}
+            className="text-cml-green hover:text-green-700 text-sm font-medium transition-colors"
+          >
+            Read more
+          </button>
                       </div>
                       <div className="flex-shrink-0">
                         <img 
-                          src={item.image} 
+                          src={item.images[0]} 
                           alt={item.title}
                           className="w-20 h-16 object-cover rounded"
                         />
