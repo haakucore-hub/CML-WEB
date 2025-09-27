@@ -87,7 +87,7 @@ const MediaCoverage = () => {
         </h1>
       </section>
 
-      <div className="p-6 md:p-16 bg-white grid grid-cols-1 lg:grid-cols-2 gap-12 items-start">
+      <div className="p-6 md:p-16 bg-white grid grid-cols-1 lg:grid-cols-2 gap-6 items-start">
         {/* Left Column - Description */}
         <div className="bg-gray-200 p-5">
           <h2 className="text-body-header text-center md:text-start mb-6">

@@ -16,6 +16,7 @@ import Career from "./pages/careers";
 import Tenders from "./pages/Tenders";
 import AnnualReportsPage from "./pages/AnnualReports";
 import NewsArticle from "./pages/NewsArticle";
+
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();

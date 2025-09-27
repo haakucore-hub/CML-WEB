@@ -10,7 +10,7 @@ import AwardsSection from "@/components/AwardsSection";
 import ChairmanSection from "@/components/ChairmanSection";
 import NewsEventsSection from "@/components/NewsEventsSection";
 import NewsletterSection from "@/components/NewsletterSection";
-import OutreachSection from "@/components/OutreachSection";
+import SocialOutreachComponent from "@/components/SocialOutreach";
 
 
 
@@ -26,7 +26,7 @@ const Index = () => {
               <StoriesSection/>
               <ChairmanSection/>
               <NewsEventsSection/>
-
+              <SocialOutreachComponent/>
               <AnnualReportSection/>
               <AwardsSection/>
 
