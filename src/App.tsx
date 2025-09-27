@@ -16,6 +16,7 @@ import Career from "./pages/careers";
 import Tenders from "./pages/Tenders";
 import AnnualReportsPage from "./pages/AnnualReports";
 import NewsArticle from "./pages/NewsArticle";
+import WorkDetailPage from "./pages/WorkDetail";
 
 import NotFound from "./pages/NotFound";
 
@@ -37,6 +38,7 @@ const App = () => (
           <Route path="/Career" element={<Career/>} />
           <Route path="/privacy" element={<PrivacyPolicy />} />
           <Route path="/NewsArticle/:id" element={<NewsArticle />} />
+          <Route path="/WorkDetail/:id" element={<WorkDetailPage/>}/>
           <Route path="/terms" element={<TermsAndConditions />} />
           <Route path="/Tenders" element={<Tenders />} />
            <Route path="/refund" element={<RefundPolicy />} />

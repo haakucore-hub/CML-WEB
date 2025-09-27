@@ -21,6 +21,7 @@ const Index = () => {
       <HeroSection />
             <PartnersSection />
               <ImpactSection />
+                    <WhatWeDoSection />
               <OutreachSection/>
           
               <StoriesSection/>
@@ -30,7 +31,7 @@ const Index = () => {
               <AnnualReportSection/>
               <AwardsSection/>
 
-      {/* <WhatWeDoSection /> */}
+
 
       {/* <ImpactSection /> */}
           <NewsletterSection/>

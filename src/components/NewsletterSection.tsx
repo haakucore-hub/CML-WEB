@@ -2,12 +2,12 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { ArrowUpRight, CloudCog } from "lucide-react"; 
 import useNewsletterStore from '@/store/useNewsletterStore';
-// Import styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useEffect } from 'react';
 
+import useOurWorkStore from '@/store/useOurWorkStore';
 interface Newsletter {
   id: number;
   title: string;
@@ -53,6 +53,7 @@ const NewsletterSection = () => {
 
   useEffect(() => {
     fetchNewsLetter();
+
   }, [fetchNewsLetter]);
 
 console.log("Newsletters from store:", newsLetter);

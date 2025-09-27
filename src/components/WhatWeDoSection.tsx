@@ -1,233 +1,144 @@
-import { useState, useEffect } from "react";
-import { Button } from "@/components/ui/button";
-import { ArrowRight } from "lucide-react";
-import useWhatWeDoStore from "@/store/whatWeDoStore";
-import { sdgData } from "@/data/sdgData";
-import floodResilience from "@/assets/flood-resilience-1.jpg";
-import livelihood from "@/assets/livelihood-2.jpg";
-import fishery from "@/assets/fishery-3.jpg";
-import orchard from "@/assets/orchard-4.jpg";
+import React, { useState, useEffect } from 'react';
+import { ArrowRight } from 'lucide-react';
+import useOurWorkStore from '@/store/useOurWorkStore';
+import { useNavigate } from "react-router-dom";
 
-const WhatWeDoSection = () => {
-  const [activeTab, setActiveTab] = useState("livelihood");
-  const [selectedProject, setSelectedProject] = useState(0);
-  const { projects, loading, error, fetchProjects } = useWhatWeDoStore();
 
-  const tabs = [
-    { id: "livelihood", label: "LIVELIHOOD" },
-    { id: "wash", label: "WaSH" },
-    { id: "education", label: "EDUCATION" },
-    { id: "institutionBuilding", label: "INSTITUTION BUILDING" }
-  ];
+const WhatWeDoComponent = () => {
+  const navigate = useNavigate();
+  const [selectedCategory, setSelectedCategory] = useState('Livelihood');
 
-  // Fallback data for demo
-  const fallbackProjects = [
-    {
-      title: "ASI - FLOOD RESILIENCE",
-      state: "ASSAM",
-      description: "The primary objective of the project is optimal use of the underutilized land resources of enterprising rural households in Boko Block of Kamrup District of Assam. Provision of access to improved input support leading to increased production and productivity is the key intervention the program is based on.",
-      highlightPoints: [
-        "The project will generate an additional revenue of Rs. 5.6 Crore at the end of 3rd Year. In terms of outcomes, the project envisages 244+ MT of Horticultural Produce and 90 MT of Fish. The project aims to augment the average additional household income of the famers to tune of Rs. 80K to Rs. 1 lakhs."
-      ],
-      outcomes: {
-        additionalRevenue: "Rs. 5.6 Crore",
-        produce: "244+ MT",
-        fish: "90 MT",
-        incomeIncrease: "Rs. 80K - 1 Lakh"
-      },
-      images: [floodResilience, livelihood, fishery, orchard],
-      sdgs: [1, 2],
-      buttonText: "Learn more",
-      buttonLink: "#flood-resilience"
-    }
-  ];
-
+const { ourWork , fetchOurWork } = useOurWorkStore();
+console.log("Our Work from store:", ourWork);
+  // Simulate data fetching
   useEffect(() => {
-    fetchProjects(activeTab);
-  }, [activeTab, fetchProjects]);
+ fetchOurWork();
+  }, []);
 
-  const displayProjects = projects.length > 0 ? projects : fallbackProjects;
-  const currentProject = displayProjects[selectedProject];
+  // Get unique categories
+  const categories = ['Livelihood', 'WaSH', 'Education', 'Institution Building'];
 
-  if (!currentProject) return null;
+  // Filter data by selected category
+  const filteredData = ourWork.filter(item => item.type === selectedCategory);
 
-  const getSDGInfo = (sdgId: number) => {
-    return sdgData.find(sdg => sdg.id === sdgId);
-  };
+  // SDG icons component
+  const SDGIcons = () => (
+    <div className="flex items-center gap-2">
+      <span className="text-sm font-bold text-[hsl(var(--cml-black))]">SDE'S COVERED</span>
+      <div className="flex gap-1">
+        <div className="w-12 h-12 bg-red-600 text-white flex items-center justify-center text-xs font-bold rounded">
+          <div className="text-center">
+            <div className="text-lg">1</div>
+            <div className="text-xs leading-none">NO POVERTY</div>
+          </div>
+        </div>
+        <div className="w-12 h-12 bg-orange-400 text-white flex items-center justify-center text-xs font-bold rounded">
+          <div className="text-center">
+            <div className="text-lg">2</div>
+            <div className="text-xs leading-none">ZERO HUNGER</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
 
   return (
-    <section className="py-16 bg-gray-50">
-      <div className="container mx-auto px-4">
+    <div className="py-12 px-4 bg-white">
+      <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-body-header mb-8">
-            WHAT WE <span className="text-cml-orange">DO</span>
+        <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-2 md:mb-12">
+          <h2 className="text-body-header mb-6 lg:mb-0">
+            <span className="text-[hsl(var(--cml-black))]">WHAT WE </span>
+            <span className="text-[hsl(var(--cml-orange))]">DO</span>
           </h2>
           
-          {/* Tabs */}
-          <div className="flex flex-wrap justify-center gap-4 mb-12">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => {
-                  setActiveTab(tab.id);
-                  setSelectedProject(0);
-                }}
-                className={`px-8 py-3 rounded-full text-cta font-medium transition-all duration-300 ${
-                  activeTab === tab.id
-                    ? 'bg-cml-green text-white shadow-lg'
-                    : 'bg-white text-cml-black border border-gray-300 hover:border-cml-orange hover:text-cml-orange'
-                }`}
-              >
-                {tab.label}
-              </button>
-            ))}
+          {/* <SDGIcons /> */}
+        </div>
+
+        {/* Category Filters */}
+        <div className="flex flex-wrap gap-2 md:gap-4 mb-12">
+          {categories.map((category) => (
+            <button
+              key={category}
+              onClick={() => setSelectedCategory(category)}
+              className={`px-2 py-2 md:px-8 md:py-4 rounded-full text-[8px] md:text-sm font-bold uppercase transition-all ${
+                selectedCategory === category
+                  ? 'bg-[hsl(var(--cml-green))] text-white'
+                  : 'bg-white border-2 border-[hsl(var(--cml-green))] text-[hsl(var(--cml-green))] hover:bg-[hsl(var(--cml-green))/10]'
+              }`}
+            >
+              {category === 'WaSH' ? 'WaSH' : category.replace(/([A-Z])/g, ' $1').trim()}
+            </button>
+          ))}
+        </div>
+
+{/* Cards Grid */}
+<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
+  {filteredData.map((item, index) => (
+    <div
+      key={item.id}
+      className="group relative rounded-2xl md:rounded-3xl overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl"
+      style={{
+        height: window.innerWidth >= 768 
+          ? (index === 0 ? '500px' : index % 3 === 1 ? '450px' : '400px')
+          : '350px'
+      }}
+    >
+      {/* Background Image */}
+      <div className="absolute inset-0">
+        <img
+          src={item.image}
+          alt={item.title}
+          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+        />
+        <div className="absolute inset-0 bg-black/40 md:group-hover:bg-black/60 transition-all duration-300"></div>
+      </div>
+
+      {/* Content */}
+      <div className="relative h-full flex flex-col justify-end p-4 md:p-6 text-white">
+        <div className="transform translate-y-0 md:group-hover:translate-y-0 transition-transform duration-300">
+          <span className="inline-block px-2 py-1 md:px-3 md:py-1 bg-[hsl(var(--cml-orange))] text-white text-xs font-bold rounded-full mb-2 md:mb-3">
+            {item.type.toUpperCase()}
+          </span>
+          
+          <h3 className="text-lg md:text-xl font-bold mb-2 leading-tight">
+            {item.title}
+          </h3>
+          
+          <p className="text-sm opacity-90 mb-3 md:mb-4 line-clamp-2">
+            {item.subtitle}
+          </p>
+          
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center text-xs mb-3 md:mb-4 gap-1 sm:gap-0">
+            <span>Beneficiaries: <strong>{item.beneficiaries}</strong></span>
+            <span>Villages: <strong>{item.villages}</strong></span>
           </div>
         </div>
 
-        {loading ? (
+        {/* Learn More Button - always visible on mobile, appears on hover on desktop */}
+        <div className="transform translate-y-0 opacity-100 md:translate-y-full md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 transition-all duration-300">
+          <button  onClick={() => navigate(`/WorkDetail/${item.id}`)} className="flex items-center justify-center sm:justify-start gap-2 bg-[hsl(var(--cml-orange))] text-white px-4 py-2 rounded-full hover:bg-[hsl(var(--cml-green))/90] transition-colors text-sm font-medium w-full sm:w-auto">
+            Learn More
+            <ArrowRight className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+        {/* Show message if no data for selected category */}
+        {filteredData.length === 0 && (
           <div className="text-center py-12">
-            <p className="text-body">Loading projects...</p>
-          </div>
-        ) : error ? (
-          <div className="text-center py-12">
-            <p className="text-body text-destructive">Error: {error}</p>
-          </div>
-        ) : (
-          <div className="relative">
-            {/* Main Content Area */}
-            <div className="flex flex-col lg:flex-row items-center gap-12">
-              
-              {/* Left Side - Circular Images */}
-              <div className="hidden lg:flex flex-col space-y-8 w-64">
-                {currentProject.images.slice(0, 2).map((image, index) => (
-                  <div 
-                    key={index}
-                    className="w-48 h-48 rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300"
-                  >
-                    <img
-                      src={image}
-                      alt={`Project ${index + 1}`}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-
-              {/* Center - Project Details */}
-              <div className="flex-1 max-w-2xl">
-                <div className="bg-cml-black rounded-3xl p-8 text-white relative">
-                  <h3 className="text-header text-3xl mb-2 text-center">
-                    {currentProject.title}
-                  </h3>
-                  <p className="text-cml-orange text-xl font-bold text-center mb-6">
-                    {currentProject.state}
-                  </p>
-                  
-                  <div className="space-y-4 mb-6">
-                    <p className="text-body leading-relaxed">
-                      {currentProject.description}
-                    </p>
-                    {currentProject.highlightPoints.map((point, index) => (
-                      <p key={index} className="text-body leading-relaxed">
-                        {point}
-                      </p>
-                    ))}
-                  </div>
-
-                  <div className="text-center">
-                    <Button 
-                      className="bg-cml-orange hover:bg-cml-orange/90 text-white px-8 py-3 rounded-full text-cta"
-                    >
-                      {currentProject.buttonText || "Learn more"}
-                      <ArrowRight className="ml-2 h-5 w-5" />
-                    </Button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Right Side - Images and SDGs */}
-              <div className="lg:w-80 space-y-8">
-                {/* More Circular Images */}
-                <div className="hidden lg:flex flex-col space-y-8">
-                  {currentProject.images.slice(2, 4).map((image, index) => (
-                    <div 
-                      key={index + 2}
-                      className="w-48 h-48 rounded-full overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ml-auto"
-                    >
-                      <img
-                        src={image}
-                        alt={`Project ${index + 3}`}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  ))}
-                </div>
-
-                {/* SDGs Covered */}
-                <div className="bg-white rounded-xl p-6 shadow-lg">
-                  <h4 className="text-label mb-4 text-center">
-                    <span className="text-cml-orange">SDE'S</span> COVERED
-                  </h4>
-                  <div className="flex flex-wrap gap-3 justify-center">
-                    {currentProject.sdgs.map((sdgId) => {
-                      const sdg = getSDGInfo(sdgId);
-                      if (!sdg) return null;
-                      
-                      return (
-                        <div
-                          key={sdgId}
-                          className="w-16 h-16 rounded-lg flex flex-col items-center justify-center text-white text-xs font-bold text-center"
-                          style={{ backgroundColor: sdg.color }}
-                        >
-                          <span className="text-lg mb-1">{sdgId}</span>
-                          <span className="text-xs leading-tight">
-                            {sdg.title.split(' ')[0]}<br/>
-                            {sdg.title.split(' ')[1]}
-                          </span>
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Mobile Images Grid */}
-            <div className="lg:hidden mt-8 grid grid-cols-2 gap-4">
-              {currentProject.images.map((image, index) => (
-                <div 
-                  key={index}
-                  className="aspect-square rounded-2xl overflow-hidden shadow-lg"
-                >
-                  <img
-                    src={image}
-                    alt={`Project ${index + 1}`}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        )}
-
-        {/* Project Navigation */}
-        {displayProjects.length > 1 && (
-          <div className="flex justify-center mt-8 space-x-2">
-            {displayProjects.map((_, index) => (
-              <button
-                key={index}
-                onClick={() => setSelectedProject(index)}
-                className={`w-3 h-3 rounded-full transition-colors ${
-                  selectedProject === index ? 'bg-cml-orange' : 'bg-gray-300'
-                }`}
-              />
-            ))}
+            <p className="text-xl text-muted-foreground">
+              No projects available for {selectedCategory} category.
+            </p>
           </div>
         )}
       </div>
-    </section>
+    </div>
   );
 };
 
-export default WhatWeDoSection;
+export default WhatWeDoComponent;
