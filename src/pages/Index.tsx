@@ -11,7 +11,7 @@ import ChairmanSection from "@/components/ChairmanSection";
 import NewsEventsSection from "@/components/NewsEventsSection";
 import NewsletterSection from "@/components/NewsletterSection";
 import SocialOutreachComponent from "@/components/SocialOutreach";
-
+import OutreachSection from "@/components/OutreachSection";
 
 
 const Index = () => {
@@ -21,7 +21,7 @@ const Index = () => {
       <HeroSection />
             <PartnersSection />
               <ImpactSection />
-              {/* <OutreachSection/> */}
+              <OutreachSection/>
           
               <StoriesSection/>
               <ChairmanSection/>
