@@ -1,5 +1,6 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
+import DonationPopup from "@/components/DonationPopup";
 import useBannerStore from "@/store/useBannerStore";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, EffectFade } from "swiper/modules";
@@ -8,6 +9,7 @@ import "swiper/css/effect-fade";
 import "swiper/css/autoplay";
 
 const HeroSection = () => {
+  const [showDonation, setShowDonation] = useState(false);
   const { fetchBanners, banners, loading } = useBannerStore();
 
   useEffect(() => {
@@ -65,11 +67,12 @@ const HeroSection = () => {
             development through inclusive partnerships and innovation.
           </p>
 
-          <Button className="text-white bg-cml-orange hover:bg-cml-orange/90 px-5 py-1 rounded-full font-semibold">
+          <Button  onClick={() => setShowDonation(true)} className="text-white bg-cml-orange hover:bg-cml-orange/90 px-5 py-1 rounded-full font-semibold">
             DONATE
           </Button>
         </div>
       </div>
+        <DonationPopup open={showDonation} onClose={() => setShowDonation(false)} />
     </section>
   );
 };

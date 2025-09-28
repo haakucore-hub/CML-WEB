@@ -44,7 +44,7 @@ console.log("Our Work from store:", ourWork);
 
 
   return (
-    <div className="py-12 px-4 bg-white">
+    <div id='whatwedo' className="py-12 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-2 md:mb-12">

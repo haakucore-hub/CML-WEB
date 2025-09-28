@@ -1,4 +1,5 @@
 import { Facebook, Instagram, Linkedin, Mail, Phone, MapPin } from "lucide-react";
+import { Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
@@ -20,9 +21,18 @@ const Footer = () => {
               education, health, and leadership.
             </p>
             <div className="flex space-x-4">
-              <Facebook className="h-6 w-6 hover:text-cml-orange transition-colors cursor-pointer" />
-              <Instagram className="h-6 w-6 hover:text-cml-orange transition-colors cursor-pointer" />
-              <Linkedin className="h-6 w-6 hover:text-cml-orange transition-colors cursor-pointer" />
+              <a href="https://www.facebook.com/cmltatatrustssports/" target="_blank" rel="noopener noreferrer">
+                <Facebook className="h-6 w-6 hover:text-cml-orange transition-colors cursor-pointer" />
+              </a>
+              <a href="https://www.instagram.com/cmlnortheast/" target="_blank" rel="noopener noreferrer">
+                <Instagram className="h-6 w-6 hover:text-cml-orange transition-colors cursor-pointer" />
+              </a>
+              <a href="https://www.linkedin.com/company/centre-for-microfinance-and-livelihood/" target="_blank" rel="noopener noreferrer">
+                <Linkedin className="h-6 w-6 hover:text-cml-orange transition-colors cursor-pointer" />
+              </a>
+              <a href="https://x.com/CMLnortheast" target="_blank" rel="noopener noreferrer">
+                <Twitter className="h-6 w-6 hover:text-cml-orange transition-colors cursor-pointer" />
+              </a>
             </div>
           </div>
 
@@ -35,7 +45,7 @@ const Footer = () => {
               <li><a href="#leadership" className="hover:text-cml-orange transition-colors">Leadership Team</a></li>
               <li><a href="#board" className="hover:text-cml-orange transition-colors">Board of Directors</a></li>
               <li><a href="#reports" className="hover:text-cml-orange transition-colors">Annual Reports</a></li>
-              <li><a href="#transparency" className="hover:text-cml-orange transition-colors">Transparency</a></li>
+              <li><a href="/MediaCoverage" className="hover:text-cml-orange transition-colors">News And Events</a></li>
             </ul>
           </div>
 
@@ -43,12 +53,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-bold">OUR WORK</h3>
             <ul className="space-y-2 text-footer">
-              <li><a href="#education" className="hover:text-cml-orange transition-colors">Education Programs</a></li>
-              <li><a href="#livelihood" className="hover:text-cml-orange transition-colors">Livelihood Support</a></li>
-              <li><a href="#health" className="hover:text-cml-orange transition-colors">Health & Nutrition</a></li>
-              <li><a href="#women" className="hover:text-cml-orange transition-colors">Women Empowerment</a></li>
-              <li><a href="#community" className="hover:text-cml-orange transition-colors">Community Development</a></li>
-              <li><a href="#emergency" className="hover:text-cml-orange transition-colors">Emergency Relief</a></li>
+              <li><a href="#whatwedo" className="hover:text-cml-orange transition-colors">Education</a></li>
+              <li><a href="#whatwedo"  className="hover:text-cml-orange transition-colors">Livelihood</a></li>
+              <li><a href="#whatwedo"  className="hover:text-cml-orange transition-colors">WaSH</a></li>
+              <li><a href="#whatwedo"  className="hover:text-cml-orange transition-colors">Institution Building</a></li>
+
             </ul>
           </div>
 
@@ -58,18 +67,16 @@ const Footer = () => {
             <div className="space-y-3">
               <div className="flex items-start space-x-3">
                 <Mail className="h-5 w-5 mt-1 flex-shrink-0 text-cml-orange" />
-                <span className="text-footer">contact@cml.org</span>
+                <span className="text-footer">contact@cmlnortheast.org</span>
               </div>
               <div className="flex items-start space-x-3">
                 <Phone className="h-5 w-5 mt-1 flex-shrink-0 text-cml-orange" />
-                <span className="text-footer">+91-1800-123-4567</span>
+                <span className="text-footer">+91 96781 45549</span>
               </div>
               <div className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 mt-1 flex-shrink-0 text-cml-orange" />
                 <div className="text-footer">
-                  <p>123 Development Lane</p>
-                  <p>Social Sector Hub</p>
-                  <p>New Delhi - 110001</p>
+                  <p>5th Floor, Divine Plaza, GS Rd, Super Market, Dispur, Sarumotoria, Guwahati, Assam 781005</p>
                 </div>
               </div>
             </div>
