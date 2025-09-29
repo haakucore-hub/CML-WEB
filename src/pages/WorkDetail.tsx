@@ -1,10 +1,11 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { ArrowRight, MapPin, Users, Home } from 'lucide-react';
 import useOurWorkStore from '@/store/useOurWorkStore';
+import DonationPopup from "@/components/DonationPopup";
 
 const WorkDetailPage = () => {
-
+  const [showDonation, setShowDonation] = useState(false);
   const { id } = useParams();
   const { 
     workDetail, 
@@ -180,11 +181,11 @@ const WorkDetailPage = () => {
 
         {/* Donate Button */}
         <div className="my-16">
-          <button className="bg-[hsl(var(--cml-orange))] text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-[hsl(var(--cml-orange))/90] transition-colors">
+          <button onClick={() => setShowDonation(true)} className="bg-[hsl(var(--cml-orange))] text-white px-8 py-4 rounded-full font-bold text-lg  transition-colors">
             DONATE NOW
           </button>
         </div>
-
+   <DonationPopup open={showDonation} onClose={() => setShowDonation(false)} />
         {/* Other Works Section */}
         {otherWorks.length > 0 && (
           <div className="mt-20">

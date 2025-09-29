@@ -36,7 +36,7 @@ const DonationPopup = ({ open, onClose }) => {
         </button>
        <div className="flex items-center p-4">
             <img 
-              src="Logo.png" 
+              src="https://firebasestorage.googleapis.com/v0/b/cmlnorthest.firebasestorage.app/o/Logo.png?alt=media&token=40b4646f-7110-4351-b3a6-5cfaed79bf42" 
               alt="Centre for Microfinance & Livelihood" 
               className="md:h-[60px] w-auto"
             />
