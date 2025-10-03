@@ -8,7 +8,7 @@ import useCareersStore from "@/store/useCareersStore";
 
 const Career = () => {
 
-    const { careers, fetchCareers, loading, error } = useCareersStore();
+  const { careers, fetchCareers, loading, error } = useCareersStore();
 
   useEffect(() => {
     fetchCareers();
@@ -17,12 +17,12 @@ const Career = () => {
 
   console.log("Careers data:", careers);
 
-  const jobPostings = careers || [] ;
+  const jobPostings = careers || [];
 
 
   return (
     <div className="min-h-screen">
-      
+
 
       {/* Hero Section */}
       <section
@@ -50,26 +50,33 @@ const Career = () => {
           {jobPostings.map((job) => (
             <div
               key={job.id}
-              className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-cmt-green"
+              className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-black"
             >
               {/* Job Type and Status */}
               <div className="flex justify-between items-start mb-4">
                 <span className="bg-cml-green text-white px-4 py-2 rounded-full text-sm font-semibold">
                   {job.type} | {job.job_level
-}
+                  }
                 </span>
-                <span className="bg-green-100 text-cml-green px-3 py-1 rounded-full text-sm font-semibold">
+                <span
+                  className={`px-3 py-1 rounded-full text-sm font-semibold 
+    ${job.status === "Close"
+                      ? "bg-[#FAE8E8] text-red-500"
+                      : "bg-green-100 text-cml-green"
+                    }`}
+                >
                   {job.status}
                 </span>
+
               </div>
 
               {/* Job Title */}
-              <h2 className="text-2xl font-bold text-cml-black mb-2 leading-tight">
+              <h2 className="text-2xl font-bold text-cml-black mb-2 leading-tight uppercase">
                 {job.title}
               </h2>
 
               {/* Department */}
-              <h3 className="text-xl font-bold text-cml-orange mb-4">
+              <h3 className="text-xl font-bold text-cml-orange mb-4 uppercase">
                 {job.category}
               </h3>
 
@@ -86,7 +93,7 @@ const Career = () => {
                 <ul className="space-y-2">
                   {job.requirements.map((req, index) => (
                     <li key={index} className="text-sm text-gray-700 flex items-start">
-                      <span className="w-2 h-2 bg-cml-orange rounded-full mt-2 mr-3 flex-shrink-0"></span>
+                      <span className="w-2 h-2 bg-black rounded-full mt-2 mr-3 flex-shrink-0"></span>
                       {req}
                     </li>
                   ))}
@@ -98,16 +105,16 @@ const Career = () => {
                 <div className="mb-6 space-y-2">
                   <div className="text-sm">
                     <span className="font-bold text-cml-black">LOCATION: </span>
-                    <span className="text-gray-700">{job.location}</span>
+                    <span className="font-bold text-cml-black">{job.location}</span>
                   </div>
                   <div className="text-sm">
                     <span className="font-bold text-cml-black">EXPERIENCE: </span>
-                    <span className="text-gray-700">{job.experience}</span>
+                    <span className="font-bold text-cml-black">{job.experience}</span>
                   </div>
                 </div>
 
                 {/* Apply Button */}
-                <button className=" bg-cml-orange hover:bg-orange-600 text-white md:font-bold py-2 px-2 rounded-full transition-colors duration-300">
+                <button className="text-[16px] bg-cml-orange hover:bg-orange-600 text-white  py-2 px-2  rounded-full transition-colors duration-300">
                   APPLY NOW
                 </button>
               </div>
