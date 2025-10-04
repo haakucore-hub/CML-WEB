@@ -3,16 +3,18 @@ import { Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-cml-green text-white">
+    <footer
+      className="bg-cml-green text-white relative"
+      style={{
+        backgroundImage: "url('/footer.png')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundRepeat: 'no-repeat',
+      }}
+    >
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
-          {/* Company Info */}
           <div className="space-y-4">
-            {/* <img 
-              src="Logo.png" 
-              alt="Centre for Microfinance & Livelihood" 
-              className="h-16 w-auto filter brightness-0 invert"
-            /> */}
             <p className="text-footer leading-relaxed">
               Centre for Microfinance & Livelihood (CML) is a 
               Tata Trusts initiative committed to empowering 

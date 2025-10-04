@@ -1,20 +1,21 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { ArrowRight, MapPin, Users, Home } from 'lucide-react';
 import useOurWorkStore from '@/store/useOurWorkStore';
 import DonationPopup from "@/components/DonationPopup";
+import { ArrowRight } from 'lucide-react';
 
 const WorkDetailPage = () => {
   const [showDonation, setShowDonation] = useState(false);
   const { id } = useParams();
-  const { 
-    workDetail, 
-    loadingDetail, 
-    errorDetail, 
+  const {
+    workDetail,
+    relatedWorks,
+    loadingDetail,
+    errorDetail,
     fetchWorkById,
     ourWork,
     fetchOurWork,
-    loadingList 
+    loadingList
   } = useOurWorkStore();
 
   useEffect(() => {
@@ -26,9 +27,9 @@ const WorkDetailPage = () => {
   useEffect(() => {
     fetchOurWork();
   }, [fetchOurWork]);
-
+  console.log(relatedWorks)
   // Filter other works excluding current one
-  const otherWorks = ourWork.filter(work => 
+  const otherWorks = ourWork.filter(work =>
     String(work.id) !== String(id) && String(work.dateID) !== String(id)
   ).slice(0, 4);
 
@@ -39,7 +40,7 @@ const WorkDetailPage = () => {
           <div className="animate-pulse">
             {/* Title skeleton */}
             <div className="h-8 bg-muted rounded w-3/4 mb-6"></div>
-            
+
             {/* Badges skeleton */}
             <div className="flex gap-4 mb-12">
               <div className="h-10 bg-muted rounded-full w-20"></div>
@@ -75,7 +76,7 @@ const WorkDetailPage = () => {
             Work Not Found
           </h2>
           <p className="text-muted-foreground mb-6">{errorDetail}</p>
-          <button 
+          <button
             onClick={() => window.history.back()}
             className="bg-[hsl(var(--cml-green))] text-white px-6 py-3 rounded-full hover:bg-[hsl(var(--cml-green))/90] transition-colors"
           >
@@ -93,7 +94,7 @@ const WorkDetailPage = () => {
           <h2 className="text-2xl font-bold text-[hsl(var(--cml-black))] mb-4">
             No Work Details Available
           </h2>
-          <button 
+          <button
             onClick={() => window.history.back()}
             className="bg-[hsl(var(--cml-green))] text-white px-6 py-3 rounded-full hover:bg-[hsl(var(--cml-green))/90] transition-colors"
           >
@@ -106,28 +107,79 @@ const WorkDetailPage = () => {
 
   return (
     <div className="min-h-screen bg-white">
+      {/* Hero Section */}
+      <section
+        className="relative h-64 bg-cover bg-center flex items-center justify-center"
+        style={{
+          backgroundImage:
+            "url('/2487984edae468540f569b057a9d6ca7c30142ac(2).jpg')",
+        }}
+      >
+        {/* Gradient + Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-cml-green/80 to-cml-green/60">
+          <div className="absolute inset-0 bg-black/30"></div>
+        </div>
+
+
+        {/* Heading 2*/}
+        <h1 className="relative text-center font-bold">
+          {/* Smaller subtitle (type) */}
+          <span className="block text-xl uppercase sm:text-2xl md:text-3xl text-white mb-2">
+            {workDetail.type}
+          </span>
+
+          {/* Main title with alternating colors */}
+          <span className="block text-4xl sm:text-5xl md:text-6xl">
+            {workDetail.title.split(" ").map((word, index) => (
+              <span
+                key={index}
+                className={index % 2 === 0 ? "text-white" : "text-cml-orange"}
+              >
+                {word}{" "}
+              </span>
+            ))}
+          </span>
+        </h1>
+
+
+
+      </section>
+
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        {relatedWorks.length > 0 && (
+          <div className="flex flex-wrap gap-4">
+            {relatedWorks.map((work) => (
+              <span
+                key={work.id}
+                onClick={() => (window.location.href = `/WorkDetail/${work.id || work.dateID}`)}
+                className="cursor-pointer inline-flex items-center gap-2 px-4 py-2 bg-[hsl(var(--cml-orange))] text-white rounded-full font-bold text-sm hover:bg-[hsl(var(--cml-green)/0.8)] transition-colors"
+              >
+                {work.title}<ArrowRight className="w-4 h-4" />
+              </span>
+            ))}
+          </div>
+        )}
+      </div>
+
       <div className="max-w-7xl mx-auto px-4 py-12">
         {/* Header */}
         <div className="mb-12">
           <h1 className="text-body-header text-[hsl(var(--cml-black))] mb-6 leading-tight">
             {workDetail.subtitle || workDetail.title}
           </h1>
-          
+
           {/* Info Badges */}
           <div className="flex flex-wrap gap-4">
             <span className="inline-flex items-center gap-2 px-4 py-2 bg-[hsl(var(--cml-green))] text-white rounded-full font-bold text-sm">
-              <MapPin className="w-4 h-4" />
-              ASSAM
+              {workDetail.state}
             </span>
             {workDetail.villages && (
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-[hsl(var(--cml-green))] text-white rounded-full font-bold text-sm">
-                <Home className="w-4 h-4" />
                 {workDetail.villages} VILLAGES
               </span>
             )}
             {workDetail.beneficiaries && (
               <span className="inline-flex items-center gap-2 px-4 py-2 bg-[hsl(var(--cml-green))] text-white rounded-full font-bold text-sm">
-                <Users className="w-4 h-4" />
                 {workDetail.beneficiaries} BENEFICIARIES
               </span>
             )}
@@ -137,15 +189,14 @@ const WorkDetailPage = () => {
         {/* Main Content */}
         {workDetail.desc && workDetail.desc.length > 0 ? (
           <div className="space-y-16">
-            {workDetail.desc.map((section, index) => (
+            {workDetail.desc.map((section: any, index) => (
               <div key={index} className="mb-16">
-                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center ${
-                  index % 2 === 0 ? '' : 'lg:grid-flow-col-dense'
-                }`}>
+                <div className={`grid grid-cols-1 lg:grid-cols-2 gap-8 items-center  ${index % 2 === 0 ? '' : 'lg:grid-flow-col-dense'
+                  }`}>
                   {/* Text Content */}
                   <div className={`space-y-6 ${index % 2 === 0 ? '' : 'lg:col-start-2'}`}>
-                    <div className="flex items-start gap-3">
-                      <div className="w-2 h-6 bg-[hsl(var(--cml-orange))] rounded-full flex-shrink-0 mt-1"></div>
+                    <div className="flex items-baseline gap-3">
+                      <div className="w-2 h-2 bg-black rounded-full flex-shrink-0 mt-1"></div>
                       <div>
                         <h2 className="text-xl font-bold text-[hsl(var(--cml-black))] mb-4">
                           {section.title}
@@ -185,7 +236,7 @@ const WorkDetailPage = () => {
             DONATE NOW
           </button>
         </div>
-   <DonationPopup open={showDonation} onClose={() => setShowDonation(false)} />
+        <DonationPopup open={showDonation} onClose={() => setShowDonation(false)} />
         {/* Other Works Section */}
         {otherWorks.length > 0 && (
           <div className="mt-20">
@@ -207,16 +258,16 @@ const WorkDetailPage = () => {
               </div>
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                {otherWorks.map((work) => (
+                {otherWorks.map((work: any) => (
                   <div key={work.id} className="group cursor-pointer">
-                    <div className="relative rounded-xl overflow-hidden mb-4 shadow-md">
+                    <div onClick={() => window.location.href = `/WorkDetail/${work.id || work.dateID}`} className="relative rounded-xl overflow-hidden mb-4 shadow-md">
                       <img
                         src={work.image}
                         alt={work.title}
                         className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-300"
                       />
                       <div className="absolute inset-0 bg-black/40 group-hover:bg-black/60 transition-all duration-300"></div>
-                      
+
                       {/* Content Overlay */}
                       <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
                         <div className="mb-2">
@@ -227,15 +278,13 @@ const WorkDetailPage = () => {
                         <h3 className="font-bold text-sm mb-1">
                           {work.title}
                         </h3>
-                        <p className="text-xs opacity-90 line-clamp-2">
-                          {work.subtitle || 'Development project for rural communities'}
-                        </p>
+
                       </div>
                     </div>
 
-                    <button 
-                      onClick={() => window.location.href = `/work/${work.id || work.dateID}`}
-                      className="w-full bg-[hsl(var(--cml-green))] text-white py-3 rounded-full font-bold text-sm hover:bg-[hsl(var(--cml-green))/90] transition-colors"
+                    <button
+                      onClick={() => setShowDonation(true)}
+                      className="w-full bg-[hsl(var(--cml-green))] text-white py-3 rounded-full font-bold text-sm  transition-colors"
                     >
                       DONATE
                     </button>

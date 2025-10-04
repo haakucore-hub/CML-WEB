@@ -3,12 +3,19 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 interface OurWork {
+  id:string;
   date: string;
   dateID: number;
   icon: string;
   image: string;
+  desc:any [];
+  subtitle:string;
   title: string;
+  villages:string;
+  beneficiaries:string;
+  type:string;
   description: string;
+  state:string;
 }
 
 interface OurWorkStore {
@@ -17,6 +24,7 @@ interface OurWorkStore {
   loadingList: boolean;
 
   // Single item
+   relatedWorks: OurWork[];
   workDetail: OurWork | null;
   loadingDetail: boolean;
 
@@ -32,6 +40,7 @@ interface OurWorkStore {
 const useOurWorkStore = create<OurWorkStore>((set) => ({
   // Full list
   ourWork: [],
+  relatedWorks: [],
   loadingList: false,
   errorList: null,
 
@@ -60,36 +69,64 @@ const useOurWorkStore = create<OurWorkStore>((set) => ({
   },
 
   // Fetch single work by ID
-  fetchWorkById: async (id) => {
-    set({ loadingDetail: true, errorDetail: null, workDetail: null });
+  fetchWorkById: async (id: string) => {
+    set({ loadingDetail: true, errorDetail: null, workDetail: null, relatedWorks: [] });
 
     try {
       const docRef = doc(db, "our_work", "our_work");
       const docSnap = await getDoc(docRef);
 
       if (!docSnap.exists()) {
-        set({ workDetail: null, loadingDetail: false, errorDetail: "No work data found" });
+        set({
+          workDetail: null,
+          relatedWorks: [],
+          loadingDetail: false,
+          errorDetail: "No work data found",
+        });
         return;
       }
 
       const data = docSnap.data();
       const works: OurWork[] = data.our_work || [];
 
+      // find the main work
       const work = works.find(
         (item) => String(item.dateID) === String(id) || String(item.id) === String(id)
       );
 
       if (!work) {
-        set({ workDetail: null, loadingDetail: false, errorDetail: "Work not found" });
+        set({
+          workDetail: null,
+          relatedWorks: [],
+          loadingDetail: false,
+          errorDetail: "Work not found",
+        });
         return;
       }
 
-      set({ workDetail: work, loadingDetail: false });
+      // find related works with the same title or type, excluding the main one
+      const related = works.filter(
+        (item) =>
+          item.id !== work.id &&
+          (item.title === work.title || item.type === work.type)
+      );
+
+      set({
+        workDetail: work,
+        relatedWorks: related,
+        loadingDetail: false,
+      });
     } catch (error) {
       console.error("Error fetching work by ID:", error);
-      set({ workDetail: null, loadingDetail: false, errorDetail: "Failed to fetch work" });
+      set({
+        workDetail: null,
+        relatedWorks: [],
+        loadingDetail: false,
+        errorDetail: "Failed to fetch work",
+      });
     }
   },
+
 }));
 
 export default useOurWorkStore;

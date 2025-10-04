@@ -10,7 +10,7 @@ const AboutUs = () => {
     fetchBoardMembers();
   }, [fetchMembers, fetchBoardMembers]);
 
-  // Defensive: fallback to first member if available
+
   const [selectedMember, setSelectedMember] = useState(null);
   useEffect(() => {
     if (boardMembers && boardMembers.length > 0) {
@@ -63,7 +63,7 @@ const AboutUs = () => {
                   supported by data analytics and technology.
                 </p>
 
-                <p className="leading-tight">
+                <p className="leading-tight hidden md:block">
                   With its mandate of strengthening development in the region,
                   CML started its initiatives focusing on the domains of
                   training and capacity building, livelihood intervention
@@ -71,14 +71,26 @@ const AboutUs = () => {
                   for forging linkages and advocacy.
                 </p>
               </div>
-              <div className="">
-                <div className=" md:w-[500px] max-w-md">
+              <div className="relative p-3">
+                <div className="absolute bg-cml-green bottom-0 left-0 w-[200px] h-[200px] "></div>
+                <div className="z-30 relative ">
                   <img
                     src="674232734c37f917e2b2c5d7d52f9b804e072eb5.png"
                     alt="CML Team at work"
-                    className="w-[580px] h-auto rounded-lg shadow-lg object-cover"
+                    className="w-full h-auto  shadow-lg object-cover"
                   />
                 </div>
+              </div>
+              <div className="flex flex-col space-y-6 text-gray-700 text-lg leading-relaxed">
+
+
+                <p className="leading-tight  md:hidden">
+                  With its mandate of strengthening development in the region,
+                  CML started its initiatives focusing on the domains of
+                  training and capacity building, livelihood intervention
+                  piloting and compilation and synthesis of sector information
+                  for forging linkages and advocacy.
+                </p>
               </div>
             </div>
           </div>
@@ -94,14 +106,14 @@ const AboutUs = () => {
 
           {/* Board Members Grid */}
           <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6 mb-16">
-            {boardMembers && boardMembers.map((member, index) => (
+            {boardMembers && boardMembers.map((member: any, index) => (
               <div
                 key={index}
                 className={`flex items-center cursor-pointer group w-full max-w-xs mx-auto px-3 py-2 sm:px-4 sm:py-3
         ${selectedMember && selectedMember.name === member.name
-            ? "bg-cml-green text-white rounded-full shadow-lg"
-            : "border-cml-green border-2 rounded-full hover:shadow-lg hover:bg-cml-green/10 transition-all duration-300"
-        }`}
+                    ? "bg-cml-green text-white rounded-full shadow-lg"
+                    : "border-cml-green border-2 rounded-full hover:shadow-lg hover:bg-cml-green/10 transition-all duration-300"
+                  }`}
                 onClick={() => setSelectedMember(member)}
               >
                 <div className="relative flex-shrink-0 w-12 h-12 sm:w-14 sm:h-14 mr-3 sm:mr-4 rounded-full overflow-hidden bg-green-500">
@@ -113,8 +125,8 @@ const AboutUs = () => {
                 </div>
                 <div
                   className={`text-start ${selectedMember && selectedMember.name === member.name
-                      ? "text-white"
-                      : "text-gray-900"
+                    ? "text-white"
+                    : "text-gray-900"
                     }`}
                 >
                   <h3 className="text-xs sm:text-sm md:text-base font-semibold transition-colors">
@@ -131,69 +143,90 @@ const AboutUs = () => {
           {/* Chairman Spotlight */}
 
           {selectedMember && (
-            <div className="bg-white rounded-lg shadow-lg p-4 border-4 border-cml-green">
-              <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                <div className="flex justify-center lg:justify-start">
-                  <div className="w-[366px] h-[366px] rounded-lg overflow-hidden">
-                    <img
-                      src={selectedMember.image}
-                      alt={selectedMember.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-                <div className="">
-                  <div className="mb-6">
-                    <h3 className="text-3xl font-bold text-gray-900 mb-2">
-                      {selectedMember.name?.toUpperCase()} {" "}
-                      <span className="text-cml-orange text-xl">
-                        {(selectedMember.designation || selectedMember.role)?.toUpperCase()}
-                      </span>
-                    </h3>
-                    <p className="text-gray-700 leading-relaxed">
-                      {selectedMember.desc || selectedMember.bio}
-                    </p>
-                  </div>
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                    <div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="text-sm text-gray-600">
-                          📧 Independent
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2 mb-2">
-                        <Mail className="w-4 h-4 text-gray-600" />
-                        <span className="text-sm text-gray-600">
-                          {selectedMember.email}
-                        </span>
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <Phone className="w-4 h-4 text-gray-600" />
-                        <span className="text-sm text-gray-600">
-                          {selectedMember.phone}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  <h4 className="font-semibold text-cml-green mb-3">
-                    EXPERIENCE
-                  </h4>
-                  <div className="space-y-2 text-sm text-gray-600">
-                    {(selectedMember.experience || []).map((exp, index) => (
-                      <div key={index} className="flex items-center gap-2">
-                        <span className="w-2 h-2 bg-cml-orange rounded-full"></span>
-                        <span>
-                          {typeof exp === 'string' ? exp : `${exp.role}${exp.workplace ? `, ${exp.workplace}` : ''}`}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            </div>
+  <div className="bg-white rounded-2xl  shadow-lg border-4 border-cml-green">
+    <div className="grid grid-cols-1 lg:grid-cols-3 ">
+      {/* Image Section */}
+      <div className="flex items-center justify-center ">
+        <div className=" overflow-hidden ">
+          <img
+            src={selectedMember.image}
+            alt={selectedMember.name}
+            className=" md:h-[400px] md:w-[400px] p-2"
+          />
+        </div>
+      </div>
+
+      {/* Details Section */}
+      <div className="lg:col-span-1  p-8">
+        <div className="mb-6">
+          <h3 className="text-3xl font-bold text-gray-900 mb-2">
+            {selectedMember.name?.toUpperCase()}{" "}
+            
+          </h3>
+          <span className="text-cml-orange text-sm">
+              {(selectedMember.designation || selectedMember.role)?.toUpperCase()}
+            </span>
+      <p className="text-gray-700 leading-relaxed mb-8">
+        {(selectedMember.desc || selectedMember.bio)
+          ?.split(" ")
+          .slice(0, 75)
+          .join(" ")} 
+      </p>
+
+        </div>
+
+      <div className="flex justify-between gap-6">
+  
+  {/* Mail + Phone */}
+  <div className="flex flex-col items-start  gap-2">
+    <div className="flex  items-center gap-2">
+            <Mail className="w-5 h-5 bg-cml-green text-white rounded" />
+      <span className="text-sm text-gray-900">{selectedMember.email}</span>
+
+    </div>
+    <div className="flex items-center gap-2">
+    <Phone className="w-5 h-5 bg-cml-green text-white rounded " />
+      <span className="text-sm text-gray-900">{selectedMember.phone}</span>
+        
+    </div>
+  </div>
+</div>
+
+      </div>
+
+      {/* Experience Section */}
+      <div className="lg:col-span-1 bg-[#01462414] border-t-2 md:border-t-0 md:border-l-2 border-cml-green p-8">
+        <h4 className="text-2xl font-bold text-cml-green mb-6 text-right">
+          EXPERIENCE
+        </h4>
+      <div className="space-y-0">
+  {(selectedMember.experience || []).map((exp, index) => {
+    const isLast = index === selectedMember.experience.length - 1;
+
+    return (
+      <div key={index} className="flex items-start gap-4">
+        {/* Text Content */}
+        <div className="flex-1 text-right">
+          <div className="font-bold text-lg text-gray-900">{exp.role}</div>
+          <div className="text-gray-700">{exp.workplace}</div>
+        </div>
+        
+        {/* Timeline Dot and Line */}
+        <div className="flex flex-col items-center">
+          <div className="w-4 h-4 bg-orange-500 rounded-full flex-shrink-0"></div>
+          {!isLast && (
+            <div className="w-0.5 h-16 bg-orange-500"></div>
           )}
+        </div>
+      </div>
+    );
+  })}
+</div>
+
+      </div>
+    </div>
+  </div>
+)}
         </div>
       </section>
 
@@ -205,23 +238,25 @@ const AboutUs = () => {
           </h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {members && members.map((member, index) => (
-              <div key={index} className="group">
+            {members && members.map((member: any, index) => (
+              <div key={index} className="group relative p-3">
+                <div className={`absolute  top-0 right-0 w-[150px]  h-[170px]  ${index % 2 == 0 ? 'bg-cml-green' : 'bg-cml-orange'}`}></div>
                 <div
-                  className={`border-t-4 border-r-4 ${index % 2 === 0 ? 'border-cml-green' : 'border-cml-orange'} overflow-hidden rounded-lg`}
+                  className={` overflow-hidden rounded-bl-[4rem] z-30 relative `}
                 >
                   <img
                     src={member.image}
                     alt={member.name}
                     className="w-full h-80 object-cover transition-transform duration-300"
                   />
-                  <div className="bottom-4 p-4 left-4 right-4 text-black">
-                    <h3 className="text-lg font-bold mb-1">{member.name}</h3>
-                    <p className="text-sm opacity-90 text-cml-green">
-                      {member.role}
-                    </p>
-                    <p className="text-xs opacity-80">{member.experience}</p>
-                  </div>
+
+                </div>
+                <div className=" bottom-4  p-4 left-4 right-4 text-black">
+                  <h3 className="text-lg font-bold mb-1 uppercase">{member.name}</h3>
+                  <p className="text-sm opacity-90 text-cml-green">
+                    {member.role}
+                  </p>
+                  <p className="text-xs opacity-80">Experience: {member.experience} Years</p>
                 </div>
               </div>
             ))}

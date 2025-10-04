@@ -61,7 +61,7 @@ const CollaborateSection = () => {
   };
 
   return (
-    <section className="py-6 ">
+    <section className="py-6 " id="collaborate">
       <div className="container mx-auto px-4 ">
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h2 className="text-body-header text-cml-green mb-8 text-center">

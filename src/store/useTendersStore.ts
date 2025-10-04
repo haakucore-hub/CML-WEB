@@ -3,7 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 interface TendersStore {
-  tenders: string[];
+  tenders: any[];
   loading: boolean;
   error: string | null;
   fetchTenders: () => Promise<void>;

@@ -59,7 +59,7 @@ const AnnualReportsPage = () => {
 
         {/* Heading */}
         <h1 className="relative text-4xl sm:text-5xl md:text-6xl font-bold text-white text-center">
-          ANNUAL<span className="text-cml-orange">REPORTS</span>
+          ANNUAL <span className="text-cml-orange">REPORTS</span>
         </h1>
       </section>
 
@@ -75,11 +75,11 @@ const AnnualReportsPage = () => {
               </p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-              {reports.map((report) => (
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+             {reports.slice().reverse().map((report: any, index: number) => (
                 <div key={report.id} className="flex flex-col">
                   {/* Report Cover */}
-                  <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow h-full group">
+                  <div className="bg-white overflow-hidden shadow-lg hover:shadow-xl transition-shadow h-full group">
                     <div className="relative">
                       <img
                         src={report.thumbnail || '/api/placeholder/400/600'}

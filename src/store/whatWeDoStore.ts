@@ -37,12 +37,14 @@ interface WhatWeDoStore {
   deleteProject: (tab: string, index: number) => Promise<{ success: boolean; message?: string }>;
 }
 
-const useWhatWeDoStore = create<WhatWeDoStore>((set, get) => ({
+const useWhatWeDoStore = create<WhatWeDoStore>((set,get ) => ({
   projects: [],
   loading: false,
   error: null,
 
   fetchProjects: async (tab: string) => {
+    const state = get();
+    if(state.projects.length>0) return;
     set({ loading: true, error: null });
     try {
       const docRef = doc(db, "whatWeDo", tab); // each tab is a doc

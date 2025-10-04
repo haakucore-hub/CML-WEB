@@ -83,7 +83,7 @@ const SocialOutreachComponent = () => {
 
           {/* Posts Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-            {socialOutreachs && socialOutreachs.map((post) => (
+            {socialOutreachs && socialOutreachs.slice().reverse().map((post) => (
               <div
                 key={post.id}
                 onClick={() => openPopup(post)}

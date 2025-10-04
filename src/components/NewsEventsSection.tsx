@@ -123,7 +123,7 @@ const NewsEventsSection = () => {
                 }}
                 className="news-swiper h-full"
               >
-                {news.map((item) => (
+                {news.slice().reverse().map((item) => (
                   <SwiperSlide key={item.id}>
                     <div className="flex items-start gap-4 p-3 bg-white rounded-lg shadow-sm hover:shadow-md transition-shadow group">
                       <div className="flex-1">

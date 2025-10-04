@@ -3,7 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 interface AwardStore {
-  awards: string[];           // store list of award objects or strings
+  awards: any[] ;           // store list of award objects or strings
   loading: boolean;
   error: string | null;
   fetchAwards: () => Promise<void>;

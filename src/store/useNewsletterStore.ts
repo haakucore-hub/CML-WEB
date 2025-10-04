@@ -3,6 +3,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
 interface NewsletterStore {
+ 
   newsLetter: string[];      // stores newsletter items
   loading: boolean;
   error: string | null;

@@ -1,8 +1,8 @@
-
 import { Button } from "@/components/ui/button";
 import { ChevronDown, Mail, Phone } from "lucide-react";
 import { useState } from "react";
 import { useEffect } from "react";
+import ApplyJobPopup from '@/components/ApplyJobPopup';
 import useCareersStore from "@/store/useCareersStore";
 
 
@@ -15,15 +15,13 @@ const Career = () => {
   }, [fetchCareers]);
 
 
-  console.log("Careers data:", careers);
-
   const jobPostings = careers || [];
+  const [applyOpen, setApplyOpen] = useState(false);
+  const [activeJobTitle, setActiveJobTitle] = useState('');
 
 
   return (
     <div className="min-h-screen">
-
-
       {/* Hero Section */}
       <section
         className="relative h-64 bg-cover bg-center flex items-center justify-center"
@@ -47,7 +45,7 @@ const Career = () => {
 
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {jobPostings.map((job) => (
+          {jobPostings.slice().reverse().map((job: any) => (
             <div
               key={job.id}
               className="bg-white rounded-2xl p-6 shadow-sm hover:shadow-lg transition-all duration-300 border border-black"
@@ -114,7 +112,10 @@ const Career = () => {
                 </div>
 
                 {/* Apply Button */}
-                <button className="text-[16px] bg-cml-orange hover:bg-orange-600 text-white  py-2 px-2  rounded-full transition-colors duration-300">
+                <button
+                  className="text-[16px] bg-cml-orange hover:bg-orange-600 text-white  py-2 px-2  rounded-full transition-colors duration-300"
+                  onClick={() => { setActiveJobTitle(job.title || ''); setApplyOpen(true); }}
+                >
                   APPLY NOW
                 </button>
               </div>
@@ -122,14 +123,8 @@ const Career = () => {
             </div>
           ))}
         </div>
-
-
       </div>
-
-
-
-
-
+        <ApplyJobPopup open={applyOpen} onClose={() => setApplyOpen(false)} jobName={activeJobTitle} />
     </div>
   );
 };

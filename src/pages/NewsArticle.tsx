@@ -18,7 +18,7 @@ const NewsArticleComponent = () => {
   const { news, fetchNews } = useNewsStore();
 
   useEffect(() => {
-    if (id) {
+    if (id) {    
       fetchNewsById(id);
     }
     fetchNews();
@@ -30,48 +30,41 @@ const NewsArticleComponent = () => {
 
         {/* Article Header */}
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-cml-black mb-4 leading-tight">
+          <h1 className="text-3xl uppercase md:text-4xl font-bold text-cml-black mb-4 leading-tight">
             {article?.title}
           </h1>
           <div className="text-gray-600 mb-6">
-            <span>Written By: <span className="font-semibold">{article?.author}</span></span>
+            <span>Written By: {article?.author}</span>
             <span className="mx-2">|</span>
-            <span>Published on: <span className="font-semibold">{article?.date ? new Date(article.date).toLocaleDateString() : ''}</span></span>
+            <span>Published on: {article?.date ? new Date(article.date).toLocaleDateString() : ''}</span>
           </div>
         </div>
 
         {/* Main Content Area */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-2 md:gap-8">
           {/* Left Column - Main Article */}
           <div className="lg:col-span-2">
             {/* Main Image (first image) */}
             {article?.images && article.images.length > 0 && (
-              <div className="mb-6">
+              <div className="">
                 <img
                   src={article.images[0]}
                   alt="Main article image"
-                  className="w-full h-auto rounded-lg shadow-sm"
+                  className="w-full md:h-[472px] h-auto shadow-sm"
                 />
               </div>
             )}
-            {/* Article Content */}
-            <div className="prose prose-gray max-w-none">
-              {article?.desc && article.desc.map((paragraph, index) => (
-                <p key={index} className="mb-4 text-gray-700 leading-relaxed text-base">
-                  {paragraph}
-                </p>
-              ))}
-            </div>
+
           </div>
           {/* Right Column - Side Images (rest of images) */}
-          <div className="lg:col-span-1">
-            <div className="space-y-4">
+          <div className="lg:col-span-1 ">
+            <div className="md:space-y-5 grid grid-cols-3 md:grid-cols-1 gap-2 md:gap-0">
               {article?.images && article.images.slice(1).map((image, index) => (
-                <div key={index} className="overflow-hidden rounded-lg shadow-sm">
+                <div key={index} className="overflow-hidden   shadow-sm">
                   <img
                     src={image}
                     alt={`Side image ${index + 1}`}
-                    className="w-full h-32 object-cover hover:scale-105 transition-transform duration-300"
+                    className="w-full h-20 md:h-36 object-cover hover:scale-105 transition-transform duration-300"
                   />
                 </div>
               ))}
@@ -79,6 +72,14 @@ const NewsArticleComponent = () => {
           </div>
         </div>
 
+        {/* Article Content */}
+        <div className="prose prose-gray max-w-none mt-10">
+          {article?.desc && article.desc.map((paragraph, index) => (
+            <p key={index} className="mb-4 text-gray-700 leading-relaxed text-base">
+              {paragraph}
+            </p>
+          ))}
+        </div>
         <div className="mt-16">
           {/* Heading */}
           <h2 className="text-3xl font-bold text-cml-black mb-8">
@@ -111,8 +112,8 @@ const NewsArticleComponent = () => {
             >
               {news?.map((item) =>
                 item.id === id ? null : ( // 👈 skip this slide if id matches
-                  <SwiperSlide key={item.id}    onClick={() => navigate(`/NewsArticle/${item.id}`)}>
-     
+                  <SwiperSlide key={item.id} onClick={() => navigate(`/NewsArticle/${item.id}`)}>
+
                     <div className="bg-gray-100 rounded-lg overflow-hidden shadow-sm hover:shadow-md transition-shadow group cursor-pointer">
                       <div className="relative overflow-hidden">
                         <img

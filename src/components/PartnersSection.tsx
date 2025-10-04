@@ -26,7 +26,7 @@ const PartnersSection = () => {
   const displayPartners = partners && partners.length > 0 ? partners : fallbackPartners;
 
   return (
-    <section className="py-4 bg-muted/30">
+    <section className="py-4 bg-white ">
       <div className="container mx-auto ">
         <div className="text-center mb-6">
           <h2 className="  text-body-header mb-4">
@@ -76,7 +76,7 @@ const PartnersSection = () => {
             {displayPartners.map((partner, index) => (
               <SwiperSlide key={index}>
                 <div className="flex flex-col items-center space-y-2 hover:transform hover:scale-105 transition-transform duration-300">
-                  <div className="h-20 md:h-36 w-auto flex items-center justify-center bg-white rounded-lg shadow-sm">
+                  <div className="h-20 md:h-36 w-auto flex items-center justify-center  rounded-lg shadow-sm">
                     <img
                       src={partner.image}
                       alt={partner.title}

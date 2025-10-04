@@ -2,7 +2,6 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import { Link } from "react-router-dom";
 import useReportStore from '@/store/useReportStore';
-// Import styles
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
@@ -102,7 +101,7 @@ const AnnualReportSection = () => {
             }}
             className="reports-swiper"
           >
-            {reports?.map((report) => (
+            {reports?.slice().reverse().map((report:any) => (
               <SwiperSlide key={report.id}>
                 <div className="bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow h-full group">
                   <div className="relative">
@@ -110,7 +109,7 @@ const AnnualReportSection = () => {
                       src={report.thumbnail || ''}
                       alt={'report'}  
                       className='w-full'/>
-                    {/* View Report Button */}
+              
                     <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
                       <button 
                         className="bg-cml-orange text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-800 transition-colors"

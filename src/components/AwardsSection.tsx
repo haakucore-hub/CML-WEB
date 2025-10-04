@@ -94,7 +94,7 @@ const AwardsSection = () => {
             }}
             className="awards-swiper"
           >
-            {awards.map((award) => (
+            {awards.slice().reverse().map((award) => (
               <SwiperSlide key={award.id}>
                 <div className="bg-gray-50 rounded-xl p-2 text-center h-full shadow-lg hover:shadow-xl transition-shadow">
                  <img

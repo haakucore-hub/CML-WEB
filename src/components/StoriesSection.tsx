@@ -60,7 +60,7 @@ const StoriesSection = () => {
             }}
             className="stories-swiper"
           >
-            {stories?.map((story) => (
+            {stories?.slice().reverse().map((story) => (
               <SwiperSlide key={story.id}>
                 <div className="bg-[#F1F1F1] rounded-xl p-6 h-[250px] shadow-lg ">
                   <div className="flex items-start gap-4 mb-4">

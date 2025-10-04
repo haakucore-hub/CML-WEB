@@ -7,7 +7,6 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import { useEffect } from 'react';
 
-import useOurWorkStore from '@/store/useOurWorkStore';
 interface Newsletter {
   id: number;
   title: string;
@@ -94,7 +93,7 @@ console.log("Newsletters from store:", newsLetter);
             }}
             className="newsletter-swiper"
           >
-            {newsLetter?.map((newsletter) => (
+            {newsLetter?.slice().reverse().map((newsletter) => (
               <SwiperSlide key={newsletter.id}>
                 <div className="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow h-full group cursor-pointer">
                   <div className="relative">

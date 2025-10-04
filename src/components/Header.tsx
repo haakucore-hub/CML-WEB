@@ -14,37 +14,14 @@ const Header = () => {
   const [selectedCategory, setSelectedCategory] = useState("LIVELIHOOD");
   const [selectedMobileCategory, setSelectedMobileCategory] = useState("");
 
-
-  // Static and final categories
   const categories = ['Livelihood', 'WaSH', 'Education', 'Institution Building'];
 
-  // Get subcategories for each static category from ourWork
   const getSubcategories = (category: string) => {
     return ourWork
       .filter(item => item.type?.toLowerCase() === category.toLowerCase())
       .map(item => ({ id: item.id, title: item.title }));
   };
 
-  // const workCategories = {
-  //   LIVELIHOOD: [
-  //     "ORCHARD INTENSIFICATION",
-  //     "FLOOD RESILIENCE", 
-  //     "FISHERY DEVELOPMENT",
-  //     "ASI - LIVELIHOOD"
-  //   ],
-  //   EDUCATION: [
-  //     "EARLY CHILDHOOD DEVELOPMENT",
-  //     "SCHOOL IMPROVEMENT",
-  //     "TEACHER TRAINING",
-  //     "DIGITAL LITERACY"
-  //   ],
-  //   "waSH": [
-  //     "ANTARAN",
-  //     "WATER INFRASTRUCTURE",
-  //     "SANITATION PROGRAMS",
-  //     "HYGIENE EDUCATION"
-  //   ]
-  // };
 
   useEffect(() => {
     fetchOurWork();
@@ -106,7 +83,7 @@ const Header = () => {
               {/* Multi-level Dropdown */}
               {isWorkDropdownOpen && (
                 <div
-                  className="absolute top-full left-0  w-96 bg-white rounded-lg shadow-xl border z-500"
+                  className="absolute top-full left-0  bg-white rounded-lg shadow-xl border z-500"
                   onMouseEnter={() => setIsWorkDropdownOpen(true)}
                   onMouseLeave={() => setIsWorkDropdownOpen(false)}
                 >
@@ -129,7 +106,7 @@ const Header = () => {
                     </div>
 
                     {/* Subcategories */}
-                    <div className="w-1/2">
+                    <div className="w-[500px]">
                       {getSubcategories(selectedCategory).length > 0 ? (
                         getSubcategories(selectedCategory).map((subCategory) => (
                           <Link
@@ -165,8 +142,8 @@ const Header = () => {
 
           {/* CTA Button */}
           <div className="hidden md:block text-white">
-            <Button className="text-white bg-cml-orange hover:bg-cml-orange/90 text-cta px-6 py-2 rounded-full font-semibold">
-              COLLABORATE
+            <Button  className="text-white bg-cml-orange hover:bg-cml-orange/90 text-cta px-6 py-2 rounded-full font-semibold">
+                <a href="#collaborate">COLLABORATE</a> 
             </Button>
           </div>
         </div>
@@ -175,7 +152,11 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <nav className="flex flex-col space-y-4 items-start">
-              <Link to="/" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors">
+              <Link
+                to="/"
+                className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors"
+                onClick={() => setIsMenuOpen(false)}
+              >
                 HOME
               </Link>
 
@@ -194,7 +175,13 @@ const Header = () => {
                     {categories.map((category) => (
                       <div key={category}>
                         <button
-                          onClick={() => toggleMobileCategory(category)}
+                          onClick={() => {
+                            if (selectedMobileCategory === category) {
+                              setSelectedMobileCategory("");
+                            } else {
+                              setSelectedMobileCategory(category);
+                            }
+                          }}
                           className="text-sm text-cml-black hover:text-cml-orange flex items-center gap-2 py-1"
                         >
                           {category}
@@ -211,6 +198,7 @@ const Header = () => {
                                   key={subCategory.id}
                                   to={`/WorkDetail/${subCategory.id}`}
                                   className="block text-xs text-gray-600 hover:text-cml-orange py-1"
+                                  onClick={() => setIsMenuOpen(false)}
                                 >
                                   {subCategory.title}
                                 </Link>
@@ -225,20 +213,20 @@ const Header = () => {
                 )}
               </div>
 
-              <Link to="/about" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors">
+              <Link to="/about" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors" onClick={() => setIsMenuOpen(false)}>
                 ABOUT US
               </Link>
-              <Link to="/MediaCoverage" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors">
+              <Link to="/MediaCoverage" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors" onClick={() => setIsMenuOpen(false)}>
                 MEDIA COVERAGE
               </Link>
-              <Link to="/Tenders" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors">
+              <Link to="/Tenders" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors" onClick={() => setIsMenuOpen(false)}>
                 TENDERS
               </Link>
-              <Link to="/Career" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors">
+              <Link to="/Career" className="text-cta text-cml-black hover:text-cml-orange border-b border-transparent hover:border-cml-orange pb-1 transition-colors" onClick={() => setIsMenuOpen(false)}>
                 CAREER
               </Link>
               <Button className="text-white bg-cml-orange hover:bg-cml-orange/90 text-cta px-6 py-2 rounded-full font-semibold">
-                COLLABORATE
+                <a href="#collaborate">COLLABORATE</a> 
               </Button>
             </nav>
           </div>
