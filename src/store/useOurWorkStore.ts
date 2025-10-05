@@ -37,7 +37,7 @@ interface OurWorkStore {
   fetchWorkById: (id: number | string) => Promise<void>;
 }
 
-const useOurWorkStore = create<OurWorkStore>((set) => ({
+const useOurWorkStore = create<OurWorkStore>((set,get) => ({
   // Full list
   ourWork: [],
   relatedWorks: [],
@@ -51,6 +51,8 @@ const useOurWorkStore = create<OurWorkStore>((set) => ({
 
   // Fetch all works
   fetchOurWork: async () => {
+           const state = get();
+    if(state.ourWork.length>0) return;
     set({ loadingList: true, errorList: null });
     try {
       const docRef = doc(db, "our_work", "our_work");

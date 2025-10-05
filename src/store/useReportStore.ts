@@ -9,12 +9,14 @@ interface ReportStore {
   fetchReports: () => Promise<void>;
 }
 
-const useReportStore = create<ReportStore>((set) => ({
+const useReportStore = create<ReportStore>((set, get) => ({
   reports: [],
   loading: false,
   error: null,
 
   fetchReports: async () => {
+    const state = get();
+    if (state.reports.length > 0) return;
     set({ loading: true, error: null });
 
     try {

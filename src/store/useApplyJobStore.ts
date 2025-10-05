@@ -28,6 +28,7 @@ const useApplyJobStore = create<ApplyJobStore>((set) => ({
   success: false,
 
   applyJob: async (data) => {
+   
     set({ loading: true, error: null, success: false });
     try {
       await addDoc(collection(db, "job_applicant"), {

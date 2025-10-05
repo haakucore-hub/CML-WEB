@@ -10,12 +10,14 @@ interface NewsletterStore {
   fetchNewsLetter: () => Promise<void>;
 }
 
-const useNewsletterStore = create<NewsletterStore>((set) => ({
+const useNewsletterStore = create<NewsletterStore>((set,get) => ({
   newsLetter: [],
   loading: false,
   error: null,
 
   fetchNewsLetter: async () => {
+           const state = get();
+    if(state.newsLetter.length>0) return;
     set({ loading: true, error: null });
 
     try {

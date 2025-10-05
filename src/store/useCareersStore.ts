@@ -9,12 +9,14 @@ interface CareersStore {
   fetchCareers: () => Promise<void>;
 }
 
-const useCareersStore = create<CareersStore>((set) => ({
+const useCareersStore = create<CareersStore>((set,get) => ({
   careers: [],
   loading: false,
   error: null,
 
   fetchCareers: async () => {
+           const state = get();
+    if(state.careers.length>0) return;
     set({ loading: true, error: null });
     try {
       // both collection and doc name are "careers"

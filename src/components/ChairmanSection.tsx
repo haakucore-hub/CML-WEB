@@ -35,8 +35,8 @@ const ChairmanSection = () => {
           <div>
           
             
-            <div className="space-y-6">
-              <p className="text-gray-700 text-lg leading-relaxed">
+            <div className="space-y-6 flex flex-col items-center justify-center ">
+              <p className="text-gray-700 text-md leading-relaxed">
                 Ranjit Barthakur is a social entrepreneur, committed to pursuing social 
                 change through innovative cutting edge concepts, ecological neutrality and 
                 impactful action. He has pioneered the concepts of Naturenomics™ and 
@@ -44,7 +44,7 @@ const ChairmanSection = () => {
                 livelihoods in the Eastern Himalayas.
               </p>
               
-              <p className="text-gray-700 text-lg leading-relaxed">
+              <p className="text-gray-700 text-md leading-relaxed">
                 Ranjit has served in diverse roles in both the private and public sector, 
                 most notably as an advisor to the ex-Chief Minister of Assam. He brings 
                 over 40 years of expertise in FMCGs, the hospitality sector, IT, 

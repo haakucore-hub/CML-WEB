@@ -117,7 +117,7 @@ const ApplyJobPopup: React.FC<Props> = ({ open, onClose, jobName = '' }) => {
             name="job"
             placeholder="Job title"
             value={job}
-            onChange={(e) => setJob(e.target.value)}
+             
             className="w-full border rounded px-3 py-2"
             required
           />

@@ -9,12 +9,14 @@ interface TendersStore {
   fetchTenders: () => Promise<void>;
 }
 
-const useTendersStore = create<TendersStore>((set) => ({
+const useTendersStore = create<TendersStore>((set, get) => ({
   tenders: [],
   loading: false,
   error: null,
 
   fetchTenders: async () => {
+    const state = get();
+    if (state.tenders.length > 0) return;
     set({ loading: true, error: null });
     try {
       // both collection and doc name are "tenders"

@@ -11,13 +11,15 @@ interface BoardMemberStore {
   fetchMembers: () => Promise<void>;
 }
 
-const useBoardMemberStore = create<BoardMemberStore>((set) => ({
+const useBoardMemberStore = create<BoardMemberStore>((set,get) => ({
   boardMembers: [],
   members: [],
   loading: false,
   error: null,
 
   fetchBoardMembers: async () => {
+         const state = get();
+    if(state.boardMembers.length>0) return;
     set({ loading: true, error: null });
     try {
       const docRef = doc(db, "board_members", "board_members");
@@ -37,6 +39,8 @@ const useBoardMemberStore = create<BoardMemberStore>((set) => ({
   },
 
   fetchMembers: async () => {
+       const state = get();
+    if(state.members.length>0) return;
     set({ loading: true, error: null });
     try {
       const docRef = doc(db, "board_members", "members");

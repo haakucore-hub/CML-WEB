@@ -10,12 +10,14 @@ interface BannerStore {
   fetchBanners: () => Promise<void>;
 }
 
-const useBannerStore = create<BannerStore>((set) => ({
+const useBannerStore = create<BannerStore>((set,get) => ({
   banners: [],
   loading: false,
   error: null,
 
   fetchBanners: async () => {
+             const state = get();
+    if(state.banners.length>0) return;
     set({ loading: true, error: null });
     try {
       const docRef = doc(db, "banners", "banners");

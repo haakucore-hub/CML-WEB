@@ -44,10 +44,10 @@ const WhatWeDoComponent = () => {
 
 
   return (
-    <div id='whatwedo' className="py-12 px-4 bg-white">
+    <div id='whatwedo' className="py-6 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex flex-col lg:flex-row md:items-start items-center lg:justify-between mb-2 md:mb-12">
+        <div className="flex flex-col lg:flex-row md:items-start items-center lg:justify-between mb-2 ">
           <h2 className="text-body-header mb-6 lg:mb-0">
             <span className="text-[hsl(var(--cml-black))]">WHAT WE </span>
             <span className="text-[hsl(var(--cml-orange))]">DO</span>
@@ -57,48 +57,45 @@ const WhatWeDoComponent = () => {
         </div>
 
         {/* Category Filters */}
-<div className="flex  md:flex-row flex-col items-end md:items-center justify-between gap-0 md:gap-12">
+        <div className="flex  md:flex-row flex-col items-center md:items-center justify-between gap-0 md:gap-6">
 
 
 
-  {/* Second Div: Categories */}
-  <div className="flex flex-wrap gap-2 md:gap-4 ">
-    {categories.map((category) => (
-      <button
-        key={category}
-        onClick={() => setSelectedCategory(category)}
-        className={`px-3 py-2 md:px-8 md:py-4 rounded-full text-[8px] md:text-sm font-bold uppercase transition-all ${
-          selectedCategory === category
-            ? 'bg-[hsl(var(--cml-green))] text-white'
-            : 'bg-white border-2 border-[hsl(var(--cml-green))] text-[hsl(var(--cml-green))] hover:bg-[hsl(var(--cml-green))/10]'
-        }`}
-      >
-        {category === 'WaSH' ? 'WaSH' : category.replace(/([A-Z])/g, ' $1').trim()}
-      </button>
-    ))}
-  </div>
-  {/* First Div: Text + Image in flex */}
-  <div className="flex  flex-row  items-center gap-4 md:gap-6 w-auto">
-    <div className="text-lg md:text-xl font-bold text-[hsl(var(--cml-green))]">
-      SDE’s covered
-    </div>
-    <div className="w-16 h-16 md:w-24 md:h-24 flex-shrink-0">
-      <img
-        src="/whatwedoside.png"
-        alt="SDE’s covered"
-        className="w-full h-full object-contain"
-      />
-    </div>
-  </div>
-</div>
+          {/* Second Div: Categories */}
+          <div className="flex flex-wrap gap-2 md:gap-4 ">
+            {categories.map((category) => (
+              <button
+                key={category}
+                onClick={() => setSelectedCategory(category)}
+                className={`px-3 py-2 md:px-8 md:py-4 rounded-full text-[8px] md:text-sm font-bold uppercase transition-all ${selectedCategory === category
+                    ? 'bg-[hsl(var(--cml-green))] text-white'
+                    : 'bg-white border-2 border-[hsl(var(--cml-green))] text-[hsl(var(--cml-green))] hover:bg-[hsl(var(--cml-green))/10]'
+                  }`}
+              >
+                {category === 'WaSH' ? 'WaSH' : category.replace(/([A-Z])/g, ' $1').trim()}
+              </button>
+            ))}
+          </div>
+          {/* First Div: Text + Image in flex */}
+          <div className="flex  flex-row  items-center  gap-0 md:gap-6 w-auto">
+       
+            <div className="w-48 h-48 md:w-72 md:h-72 flex-shrink-0 ">
+              <img
+                src="/whatwedoside.png"
+                alt="SDE’s covered"
+                className="w-full h-full object-contain"
+              />
+            </div>
+          </div>
+        </div>
 
 
         {/* Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 gap-4 md:gap-6">
           {filteredData.slice().reverse().map((item: any, index) => (
             <div
               key={item.id}
-              className="group w-[160px] md:h-[500px] md:w-[300px] relative rounded-[49px] md:rounded-[89px] overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:md:w-[500px]"
+              className="group w-[360px] h-[200px] md:h-[500px] md:w-[300px] relative rounded-[29px] md:rounded-[89px] overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:md:w-[500px]"
 
             >
               {/* Background Image */}

@@ -3,9 +3,12 @@ import React, { useState, useEffect } from 'react';
 import { X, Heart, Share2, ExternalLink } from 'lucide-react';
 import useSocialOutreachStore from '@/store/useSocialOutreachStore';
 
+
 const SocialOutreachComponent = () => {
   const { socialOutreachs, fetchSocialOutreachs, loading, error } = useSocialOutreachStore();
   const [selectedPost, setSelectedPost] = useState(null);
+
+
 
   useEffect(() => {
     fetchSocialOutreachs();
@@ -162,8 +165,8 @@ const SocialOutreachComponent = () => {
 
       {/* Popup Modal */}
       {selectedPost && (
-        <div className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
-          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
+        <div  className="fixed inset-0 bg-black/70 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+          <div  className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-hidden shadow-2xl">
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-border">
               <div className="flex items-center gap-3">
@@ -186,7 +189,7 @@ const SocialOutreachComponent = () => {
             </div>
 
             {/* Content */}
-            <div className="overflow-y-auto max-h-[70vh]">
+            <div onClick={() => window.open(selectedPost.link, '_blank')} className="overflow-y-auto max-h-[70vh]">
               {/* Image */}
               <div className="relative">
                 <img

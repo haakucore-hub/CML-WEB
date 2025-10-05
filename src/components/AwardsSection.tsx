@@ -1,5 +1,5 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Autoplay, Navigation, Pagination } from 'swiper/modules';
 import useAwardStore from '@/store/useAwardStore';
 import 'swiper/css';
@@ -14,7 +14,7 @@ interface Award {
   image: string;
 }
 
-const awards: Award[] = [
+const mockAwards: Award[] = [
   {
     id: 1,
     title: "Certificate of Appreciation",
@@ -53,7 +53,8 @@ const awards: Award[] = [
 ];
 
 const AwardsSection = () => {
-    const { awards, fetchAwards, loading, error } = useAwardStore();
+  const { awards, fetchAwards, loading, error } = useAwardStore();
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
   useEffect(() => {
     fetchAwards();
@@ -94,12 +95,15 @@ const AwardsSection = () => {
             }}
             className="awards-swiper"
           >
-            {awards.slice().reverse().map((award) => (
+            {(awards && awards.length ? awards : mockAwards).slice().reverse().map((award) => (
               <SwiperSlide key={award.id}>
                 <div className="bg-gray-50 rounded-xl p-2 text-center h-full shadow-lg hover:shadow-xl transition-shadow">
-                 <img
-                      src={award.image || ''}
-                      alt={'dd'}  />
+                  <img
+                    src={award.image || ''}
+                    alt={award.title}
+                    className="w-full h-68 object-cover rounded cursor-pointer"
+                    onClick={() => setSelectedImage(award.image || '')}
+                  />
                   
              
                 </div>
@@ -123,6 +127,20 @@ const AwardsSection = () => {
      
         </div>
       </div>
+      {/* Image Lightbox Modal */}
+      {selectedImage && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4">
+          <div className="relative max-w-4xl w-full">
+            <button
+              onClick={() => setSelectedImage(null)}
+              className="absolute -top-6 -right-6 bg-white rounded-full p-2 shadow-md text-cml-orange"
+            >
+              ×
+            </button>
+            <img src={selectedImage} alt="award" className="w-full h-auto rounded-lg shadow-lg object-contain" />
+          </div>
+        </div>
+      )}
     </section>
   );
 };

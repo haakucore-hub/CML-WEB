@@ -1,72 +1,13 @@
 import React, { useState, useEffect } from 'react';
-
-// Mock data based on your provided JSON
-const mockOutreachData = [
-  {
-    "women": {
-      "ongoing": "21,647",
-      "total": "32,593"
-    },
-    "household": {
-      "total": "88,204",
-      "ongoing": "21,506"
-    },
-    "children": {
-      "ongoing": "35,621",
-      "total": "93,165"
-    },
-    "districts": "11",
-    "state": "Assam",
-    "projects": "7",
-    "image": "https://firebasestorage.googleapis.com/v0/b/cmlnorthest.firebasestorage.app/o/public%2F1758268529552-Assam%20Outreach%20Illustration.png?alt=media&token=b6956a96-7b1f-4015-a038-f43defbbee48",
-    "id": "1758268539264"
-  },
-  {
-    "state": "Manipur",
-    "districts": "13",
-    "household": {
-      "ongoing": "0",
-      "total": "3,500"
-    },
-    "women": {
-      "total": "0",
-      "ongoing": "0"
-    },
-    "image": "https://firebasestorage.googleapis.com/v0/b/cmlnorthest.firebasestorage.app/o/public%2F1758268659453-Manipur%20Outreach%20Illustration.png?alt=media&token=cbc401b6-003e-49a0-a741-39287574fcc1",
-    "projects": "Nil",
-    "children": {
-      "total": "2,000",
-      "ongoing": "0"
-    },
-    "id": "1758268683650"
-  },
-  {
-    "projects": "4",
-    "household": {
-      "total": "21,491",
-      "ongoing": "7,566"
-    },
-    "image": "https://firebasestorage.googleapis.com/v0/b/cmlnorthest.firebasestorage.app/o/public%2F1758268786848-Tripura%20Outreach%20Illustration.png?alt=media&token=b5c7ac61-d3f3-4556-a205-2b3f11e761ad",
-    "children": {
-      "total": "9,000",
-      "ongoing": "Nil"
-    },
-    "state": "Tripura",
-    "districts": "5",
-    "id": "1758268796475",
-    "women": {
-      "ongoing": "0",
-      "total": "0"
-    }
-  }
-];
+import useOutreachStore from '@/store/useOutreachStore';
 
 const OutreachMapComponent = () => {
-  const [outreachData, setOutreachData] = useState([]);
-  const [selectedState, setSelectedState] = useState('Assam');
-  const [loading, setLoading] = useState(true);
+  // use the store's outreach and loading state
+  const { outreach = [], fetchOutreach, loading, error } = useOutreachStore();
+  const [selectedState, setSelectedState] = useState<string | null>(null);
 
-  // Calculate totals from all states
+  console.log("Outreach data:", outreach);
+  // Calculate totals from  all states
   const calculateTotals = () => {
     const totals = {
       projects: 0,
@@ -76,7 +17,7 @@ const OutreachMapComponent = () => {
       household: { total: 0, ongoing: 0 }
     };
 
-    outreachData.forEach(state => {
+    outreach.forEach(state => {
       // Projects
       if (state.projects !== 'Nil') {
         totals.projects += parseInt(state.projects);
@@ -103,25 +44,29 @@ const OutreachMapComponent = () => {
     return totals;
   };
 
-  // Simulate data fetching
+  // Fetch outreach on mount
   useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      setOutreachData(mockOutreachData);
-      setLoading(false);
-    };
-    
-    fetchData();
-  }, []);
+    fetchOutreach();
+  }, [fetchOutreach]);
+
+  // When outreach data arrives, set a sensible default selected state
+  useEffect(() => {
+    if (outreach && outreach.length > 0) {
+      // prefer keeping current selection if still present
+      const exists = outreach.some((s: any) => s.state === selectedState);
+      if (!selectedState || !exists) {
+        setSelectedState(outreach[0].state || null);
+      }
+    }
+  }, [outreach]);
 
   const totals = calculateTotals();
-  const selectedStateData = outreachData.find(state => state.state === selectedState);
+  const selectedStateData = outreach.find((state: any) => state.state === selectedState);
 
   // Get the selected state's image
   const getMapImage = () => {
-    const stateData = outreachData.find(state => state.state === selectedState);
-    return stateData?.image || outreachData[0]?.image;
+    const stateData = outreach.find((state: any) => state.state === selectedState);
+    return stateData?.image || outreach[0]?.image;
   };
 
   if (loading) {
@@ -193,11 +138,11 @@ const OutreachMapComponent = () => {
 
           {/* State Selector and Stats */}
           <div className="space-y-6">
-            {/* State Buttons */}
+              {/* State Buttons */}
             <div className="space-y-3">
-              {outreachData.map((state) => (
+              {(outreach || []).map((state: any) => (
                 <button
-                  key={state.id}
+                  key={state.id || state.state}
                   onClick={() => setSelectedState(state.state)}
                   className={`w-full p-2 md:px-6 md:py-4 rounded-full text-left font-bold md:text-lg transition-all ${
                     selectedState === state.state
@@ -205,12 +150,13 @@ const OutreachMapComponent = () => {
                       : 'bg-white border-2 border-[hsl(var(--cml-green))] text-[hsl(var(--cml-green))] hover:bg-[hsl(var(--cml-green))/10]'
                   }`}
                 >
-                  {state.state.toUpperCase()}
+                  {String(state.state || '').toUpperCase()}
                 </button>
               ))}
             </div>
 
             {/* Statistics Table */}
+           {/* Statistics Table */}
             <div className="bg-gray-50 rounded-lg p-6">
               <div className="grid grid-cols-3 gap-4 text-center">
                 <div></div>
@@ -218,16 +164,30 @@ const OutreachMapComponent = () => {
                 <div className="font-bold text-sm text-[hsl(var(--cml-green))]">ONGOING</div>
                 
                 <div className="font-bold text-sm text-[hsl(var(--cml-black))] text-left">NO. OF WOMEN:</div>
-                <div className="font-bold text-lg">{totals.women.total.toLocaleString()}</div>
-                <div className="font-bold text-lg text-[hsl(var(--cml-green))]">{totals.women.ongoing.toLocaleString()}</div>
+                <div className="font-bold text-lg">
+                  {selectedStateData?.women?.total ? parseInt(selectedStateData.women.total.replace(/,/g, '')).toLocaleString() : '0'}
+                </div>
+                <div className="font-bold text-lg text-[hsl(var(--cml-green))]">
+                  {selectedStateData?.women?.ongoing ? parseInt(selectedStateData.women.ongoing.replace(/,/g, '')).toLocaleString() : '0'}
+                </div>
                 
                 <div className="font-bold text-sm text-[hsl(var(--cml-black))] text-left">NO. OF CHILDREN:</div>
-                <div className="font-bold text-lg">{totals.children.total.toLocaleString()}</div>
-                <div className="font-bold text-lg text-[hsl(var(--cml-green))]">{totals.children.ongoing.toLocaleString()}</div>
+                <div className="font-bold text-lg">
+                  {selectedStateData?.children?.total ? parseInt(selectedStateData.children.total.replace(/,/g, '')).toLocaleString() : '0'}
+                </div>
+                <div className="font-bold text-lg text-[hsl(var(--cml-green))]">
+                  {selectedStateData?.children?.ongoing && selectedStateData.children.ongoing !== 'Nil' 
+                    ? parseInt(selectedStateData.children.ongoing.replace(/,/g, '')).toLocaleString() 
+                    : '0'}
+                </div>
                 
                 <div className="font-bold text-sm text-[hsl(var(--cml-black))] text-left">NO. OF HOUSEHOLDS:</div>
-                <div className="font-bold text-lg">{totals.household.total.toLocaleString()}</div>
-                <div className="font-bold text-lg text-[hsl(var(--cml-green))]">{totals.household.ongoing.toLocaleString()}</div>
+                <div className="font-bold text-lg">
+                  {selectedStateData?.household?.total ? parseInt(selectedStateData.household.total.replace(/,/g, '')).toLocaleString() : '0'}
+                </div>
+                <div className="font-bold text-lg text-[hsl(var(--cml-green))]">
+                  {selectedStateData?.household?.ongoing ? parseInt(selectedStateData.household.ongoing.replace(/,/g, '')).toLocaleString() : '0'}
+                </div>
               </div>
             </div>
 

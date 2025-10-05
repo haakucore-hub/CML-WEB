@@ -9,12 +9,14 @@ interface AwardStore {
   fetchAwards: () => Promise<void>;
 }
 
-const useAwardStore = create<AwardStore>((set) => ({
+const useAwardStore = create<AwardStore>((set,get) => ({
   awards: [],
   loading: false,
   error: null,
 
   fetchAwards: async () => {
+          const state = get();
+    if(state.awards.length>0) return;
     set({ loading: true, error: null });
 
     try {

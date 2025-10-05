@@ -18,12 +18,14 @@ interface OutreachStore {
   fetchOutreach: () => Promise<void>;
 }
 
-const useOutreachStore = create<OutreachStore>((set) => ({
+const useOutreachStore = create<OutreachStore>((set , get) => ({
   outreach: [],
   loading: false,
   error: null,
 
   fetchOutreach: async () => {
+     const state = get();
+    if(state.outreach.length>0) return;
     set({ loading: true, error: null });
     try {
       // collection: "outreach", doc: "outreach"

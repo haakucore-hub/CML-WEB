@@ -9,12 +9,14 @@ interface PartnerStore {
   fetchPartners: () => Promise<void>;
 }
 
-const usePartnerStore = create<PartnerStore>((set) => ({
+const usePartnerStore = create<PartnerStore>((set,get) => ({
   partners: [],
   loading: false,
   error: null,
 
   fetchPartners: async () => {
+        const state = get();
+    if(state.partners.length>0) return;
     set({ loading: true, error: null });
     try {
       const docRef = doc(db, "partners", "partners"); // collection and doc name
