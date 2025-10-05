@@ -93,7 +93,7 @@ const OutreachMapComponent = () => {
     <div className="py-12 px-4 bg-white">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-12">
+        <div className="mb-12 flex items-center justify-center md:justify-start">
           <h2 className="text-body-header mb-4">
             <span className="text-[hsl(var(--cml-black))]">OUR </span>
             <span className="text-[hsl(var(--cml-orange))]">OUTREACH</span>
@@ -101,6 +101,22 @@ const OutreachMapComponent = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        {/* State Buttons */}
+            <div className=" flex flex-row md:flex-col items-center justify-center gap-2 md:hidden ">
+              {(outreach || []).map((state: any) => (
+                <button
+                  key={state.id || state.state}
+                  onClick={() => setSelectedState(state.state)}
+                  className={`w-full p-2 md:px-6 md:py-4 rounded-full  font-bold md:text-lg transition-all ${
+                    selectedState === state.state
+                      ? 'bg-[hsl(var(--cml-green))] text-white'
+                      : 'bg-white border-2 border-[hsl(var(--cml-green))] text-[hsl(var(--cml-green))] hover:bg-[hsl(var(--cml-green))/10]'
+                  }`}
+                >
+                  {String(state.state || '').toUpperCase()}
+                </button>
+              ))}
+            </div>
           {/* Map Image Section */}
           <div className="lg:col-span-2">
             <div className="relative w-full h-96 bg-gray-50 rounded-lg overflow-hidden">
@@ -139,7 +155,7 @@ const OutreachMapComponent = () => {
           {/* State Selector and Stats */}
           <div className="space-y-6">
               {/* State Buttons */}
-            <div className="space-y-3">
+            <div className="space-y-3 hidden md:block">
               {(outreach || []).map((state: any) => (
                 <button
                   key={state.id || state.state}

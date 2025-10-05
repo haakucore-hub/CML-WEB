@@ -3,16 +3,29 @@ import { Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer
-      className="bg-cml-green text-white relative"
-      style={{
-        backgroundImage: "url('/footer.png')",
-        backgroundSize: 'cover',
-        backgroundPosition: 'center',
-        backgroundRepeat: 'no-repeat',
-      }}
-    >
-      <div className="container mx-auto px-4 py-12">
+    <footer className="text-white relative overflow-hidden">
+      {/* Background layers: footer background + green overlay layer at 8% opacity */}
+      <div
+        className="absolute inset-0 -z-20 pointer-events-none"
+        style={{
+          backgroundImage: "url('/footerbg.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+        }}
+      />
+      <div
+        className="absolute inset-0 -z-10 pointer-events-none"
+        style={{
+          backgroundImage: "url('/footer.png')",
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundRepeat: 'no-repeat',
+         
+        }}
+      />
+
+      <div className="container mx-auto px-4 py-12 relative z-10 bg-transparent">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="space-y-4">
             <p className="text-footer leading-relaxed">
@@ -42,11 +55,11 @@ const Footer = () => {
           <div className="space-y-4">
             <h3 className="text-lg font-bold">ABOUT US</h3>
             <ul className="space-y-2 text-footer">
-              <li><a href="#story" className="hover:text-cml-orange transition-colors">Our Story</a></li>
-              <li><a href="#vision" className="hover:text-cml-orange transition-colors">Vision & Mission</a></li>
-              <li><a href="#leadership" className="hover:text-cml-orange transition-colors">Leadership Team</a></li>
-              <li><a href="#board" className="hover:text-cml-orange transition-colors">Board of Directors</a></li>
-              <li><a href="#reports" className="hover:text-cml-orange transition-colors">Annual Reports</a></li>
+              <li><a href="/about" className="hover:text-cml-orange transition-colors">Our Story</a></li>
+              <li><a href="/about" className="hover:text-cml-orange transition-colors">Vision & Mission</a></li>
+              <li><a href="/about" className="hover:text-cml-orange transition-colors">Leadership Team</a></li>
+              <li><a href="/about" className="hover:text-cml-orange transition-colors">Board of Directors</a></li>
+              <li><a href="/AnnualReports" className="hover:text-cml-orange transition-colors">Annual Reports</a></li>
               <li><a href="/MediaCoverage" className="hover:text-cml-orange transition-colors">News And Events</a></li>
             </ul>
           </div>

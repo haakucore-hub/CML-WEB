@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 
-// Types
 interface Project {
   title: string;
   state: string;
@@ -15,7 +14,7 @@ interface Project {
     incomeIncrease?: string;
   };
   images: string[];
-  sdgs: number[]; // Sustainable Development Goals (1,2,...)
+  sdgs: number[];
   buttonText?: string;
   buttonLink?: string;
 }
@@ -47,7 +46,7 @@ const useWhatWeDoStore = create<WhatWeDoStore>((set,get ) => ({
     if(state.projects.length>0) return;
     set({ loading: true, error: null });
     try {
-      const docRef = doc(db, "whatWeDo", tab); // each tab is a doc
+      const docRef = doc(db, "whatWeDo", tab); 
       const docSnap = await getDoc(docRef);
 
       if (docSnap.exists()) {
